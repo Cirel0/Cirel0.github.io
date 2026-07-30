@@ -171,12 +171,21 @@ body.is-ready {
   animation: rise 0.7s var(--ease) 0.08s both;
 }
 
+.panel-right .detail {
+  width: 100%;
+}
+
 .panel-right .stat-head {
   justify-content: flex-end;
 }
 
 .panel-right .legend {
   align-items: flex-end;
+  width: 100%;
+}
+
+.panel-right .panel-body {
+  margin-left: auto;
 }
 
 @keyframes rise {
