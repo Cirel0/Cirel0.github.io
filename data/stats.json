@@ -1,0 +1,24 @@
+{
+  "updatedAt": "2026-07-30T17:00:00.000Z",
+  "totals": {
+    "playing": 1240,
+    "visits": 18500000
+  },
+  "games": {
+    "game-alpha": {
+      "playing": 620,
+      "visits": 9200000,
+      "name": "Project Alpha"
+    },
+    "game-beta": {
+      "playing": 410,
+      "visits": 6100000,
+      "name": "Project Beta"
+    },
+    "game-gamma": {
+      "playing": 210,
+      "visits": 3200000,
+      "name": "Project Gamma"
+    }
+  }
+}

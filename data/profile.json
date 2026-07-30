@@ -1,0 +1,20 @@
+{
+  "name": "Cirel0",
+  "title": "Roblox Scripting Developer",
+  "bio": "I specialize in Luau systems, gameplay scripting, and scalable game architecture on Roblox. Open to collaborations and commissions.",
+  "skills": [
+    "Luau",
+    "Gameplay Systems",
+    "DataStores",
+    "UI Scripting",
+    "Networking",
+    "Performance"
+  ],
+  "avatar": "assets/profile.svg",
+  "links": {
+    "roblox": "https://www.roblox.com/users/profile",
+    "discord": "",
+    "devforum": "",
+    "email": ""
+  }
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "quote": "Reliable scripter who ships clean systems and communicates clearly. A pleasure to work with.",
+    "name": "Collaborator Name",
+    "role": "Game Producer",
+    "game": "Project Alpha"
+  },
+  {
+    "quote": "Took ownership of complex gameplay features and delivered on time without drama.",
+    "name": "Studio Lead",
+    "role": "Creative Director",
+    "game": "Project Beta"
+  },
+  {
+    "quote": "Strong Luau fundamentals and a sharp eye for performance. Would hire again.",
+    "name": "Fellow Developer",
+    "role": "Technical Artist",
+    "game": "Project Gamma"
+  }
+]

@@ -3,10 +3,63 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Cirel0 — Roblox scripting developer portfolio"
+    />
     <title>Cirel0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h1>Cirel0</h1>
-    <p>Portfolio coming soon.</p>
+    <div class="noise" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#profile" data-go="profile">Cirel0</a>
+      <nav class="top-nav" aria-label="Primary">
+        <button type="button" class="nav-link" data-go="profile">About</button>
+        <button type="button" class="nav-link" data-go="game-alpha">Work</button>
+        <span class="clock" id="clock" aria-live="polite"></span>
+        <a class="nav-link contact-link" id="contact-link" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="stage">
+      <aside class="panel panel-left" aria-live="polite">
+        <p class="panel-kicker" id="left-kicker">About</p>
+        <h2 class="panel-title" id="left-title">Profile</h2>
+        <p class="panel-body" id="left-body"></p>
+        <ul class="tag-list" id="left-tags"></ul>
+      </aside>
+
+      <section class="carousel-wrap" aria-label="Portfolio pages">
+        <div class="frame-parens" aria-hidden="true">
+          <span class="paren paren-left">(</span>
+          <span class="paren paren-right">)</span>
+        </div>
+        <div class="carousel" id="carousel" tabindex="0"></div>
+      </section>
+
+      <aside class="panel panel-right">
+        <div class="detail" id="detail" aria-live="polite"></div>
+        <nav class="legend" id="legend" aria-label="Pages"></nav>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <p class="footer-hint">Scroll or use the legend to browse pages</p>
+      <p class="footer-copy">© <span id="year"></span> Cirel0</p>
+    </footer>
+
+    <div id="contact" class="contact-dock" hidden>
+      <p id="contact-text"></p>
+    </div>
+
+    <script src="app.js" type="module"></script>
   </body>
 </html>
