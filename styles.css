@@ -323,12 +323,6 @@ body.is-ready {
   );
 }
 
-.reel-spacer {
-  height: calc(var(--slot-height) * 2);
-  flex-shrink: 0;
-  pointer-events: none;
-}
-
 .carousel::-webkit-scrollbar {
   display: none;
 }

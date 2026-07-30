@@ -1,3 +1,6 @@
+const LOOP_COPIES = 3;
+const MIDDLE_LOOP = 1;
+
 const state = {
   pages: [],
   reel: [],
@@ -11,6 +14,7 @@ const state = {
   syncTimer: null,
   savedSnap: null,
   scrollTargetId: null,
+  wrapping: false,
 };
 
 const els = {
@@ -101,22 +105,18 @@ function buildPages(profile, games, testimonials) {
 }
 
 function renderCarousel() {
-  const slides = state.reel
-    .map(
-      (page, index) => `
-      <article class="slide" data-id="${page.id}" data-index="${index}">
+  const copies = [];
+  for (let loop = 0; loop < LOOP_COPIES; loop += 1) {
+    for (const [index, page] of state.reel.entries()) {
+      copies.push(`
+      <article class="slide" data-id="${page.id}" data-index="${index}" data-loop="${loop}">
         <div class="slide-card">
           <img src="${page.image}" alt="${page.label}" draggable="false" />
         </div>
-      </article>`
-    )
-    .join("");
-
-  els.carousel.innerHTML = `
-    <div class="reel-spacer" aria-hidden="true"></div>
-    ${slides}
-    <div class="reel-spacer" aria-hidden="true"></div>
-  `;
+      </article>`);
+    }
+  }
+  els.carousel.innerHTML = copies.join("");
 }
 
 function renderLegend() {
@@ -136,6 +136,15 @@ function getPage(id) {
 
 function reelIndexFor(id) {
   return state.reel.findIndex((page) => page.id === id);
+}
+
+function slotHeight() {
+  const slide = els.carousel.querySelector(".slide");
+  return slide?.offsetHeight || els.carousel.clientHeight / 5;
+}
+
+function loopHeight() {
+  return state.reel.length * slotHeight();
 }
 
 function gameStats(gameId) {
@@ -234,10 +243,14 @@ function renderDetail(page) {
   `;
 }
 
-function nearestSlideId() {
-  const slides = [...els.carousel.querySelectorAll(".slide")];
+function carouselMidY() {
   const rootRect = els.carousel.getBoundingClientRect();
-  const mid = rootRect.top + rootRect.height / 2;
+  return rootRect.top + rootRect.height / 2;
+}
+
+function nearestSlideEl() {
+  const slides = [...els.carousel.querySelectorAll(".slide")];
+  const mid = carouselMidY();
   let best = null;
   let bestDist = Infinity;
 
@@ -247,10 +260,38 @@ function nearestSlideId() {
     const dist = Math.abs(slideMid - mid);
     if (dist < bestDist) {
       bestDist = dist;
-      best = slide.dataset.id;
+      best = slide;
     }
   }
   return best;
+}
+
+function nearestSlideId() {
+  return nearestSlideEl()?.dataset.id || null;
+}
+
+function nearestSlideForId(id) {
+  const slides = [...els.carousel.querySelectorAll(`.slide[data-id="${id}"]`)];
+  if (!slides.length) return null;
+
+  const mid = carouselMidY();
+  let best = null;
+  let bestDist = Infinity;
+
+  for (const slide of slides) {
+    const rect = slide.getBoundingClientRect();
+    const slideMid = rect.top + rect.height / 2;
+    const dist = Math.abs(slideMid - mid);
+    if (dist < bestDist) {
+      bestDist = dist;
+      best = slide;
+    }
+  }
+  return best;
+}
+
+function slideInLoop(id, loop) {
+  return els.carousel.querySelector(`.slide[data-id="${id}"][data-loop="${loop}"]`);
 }
 
 function slideScrollTop(slide) {
@@ -258,6 +299,13 @@ function slideScrollTop(slide) {
     slide.offsetTop -
     (els.carousel.clientHeight - slide.offsetHeight) / 2
   );
+}
+
+function disableSnap() {
+  if (state.savedSnap == null) {
+    state.savedSnap = els.carousel.style.scrollSnapType;
+  }
+  els.carousel.style.scrollSnapType = "none";
 }
 
 function restoreSnap() {
@@ -269,7 +317,31 @@ function restoreSnap() {
   }
 }
 
+function normalizeLoopPosition() {
+  const loop = loopHeight();
+  if (!loop) return false;
+
+  const top = els.carousel.scrollTop;
+  let next = top;
+
+  if (top < loop) next = top + loop;
+  else if (top >= loop * 2) next = top - loop;
+
+  if (next === top) return false;
+
+  state.wrapping = true;
+  disableSnap();
+  els.carousel.scrollTop = next;
+  void els.carousel.offsetHeight;
+  restoreSnap();
+  requestAnimationFrame(() => {
+    state.wrapping = false;
+  });
+  return true;
+}
+
 function endSync() {
+  normalizeLoopPosition();
   restoreSnap();
   state.syncing = false;
   state.scrollTargetId = null;
@@ -291,18 +363,16 @@ function beginSync(ms = 500) {
   }, ms);
 }
 
-function scrollToSlide(id, { smooth = true } = {}) {
-  const slide = els.carousel.querySelector(`[data-id="${id}"]`);
+function scrollToSlide(id, { smooth = true, preferLoop = null } = {}) {
+  const slide =
+    (preferLoop != null ? slideInLoop(id, preferLoop) : null) ||
+    nearestSlideForId(id);
   if (!slide) return;
 
   const top = Math.max(0, slideScrollTop(slide));
   state.scrollTargetId = id;
   beginSync(smooth ? 600 : 120);
-
-  if (state.savedSnap == null) {
-    state.savedSnap = els.carousel.style.scrollSnapType;
-  }
-  els.carousel.style.scrollSnapType = "none";
+  disableSnap();
 
   els.carousel.scrollTo({
     top,
@@ -405,21 +475,27 @@ function bindEvents() {
 
   let scrollTick = false;
   els.carousel.addEventListener("scroll", () => {
+    if (state.wrapping) return;
+    if (!state.syncing) {
+      normalizeLoopPosition();
+    }
     if (state.syncing || scrollTick) return;
     scrollTick = true;
     requestAnimationFrame(() => {
       scrollTick = false;
-      if (state.syncing) return;
+      if (state.syncing || state.wrapping) return;
       const id = nearestSlideId();
       if (id && id !== state.activeId) setActive(id);
     });
   });
 
   els.carousel.addEventListener("scrollend", () => {
+    if (state.wrapping) return;
     if (state.syncing) {
       endSync();
       return;
     }
+    normalizeLoopPosition();
     const id = nearestSlideId();
     if (id && id !== state.activeId) setActive(id);
   });
@@ -429,10 +505,11 @@ function bindEvents() {
     const index = reelIndexFor(state.activeId);
     if (index < 0) return;
     event.preventDefault();
+    const len = state.reel.length;
     const next =
       event.key === "ArrowDown"
-        ? Math.min(state.reel.length - 1, index + 1)
-        : Math.max(0, index - 1);
+        ? (index + 1) % len
+        : (index - 1 + len) % len;
     setActive(state.reel[next].id, { scroll: true });
   });
 
@@ -474,9 +551,9 @@ async function init() {
   bindEvents();
 
   setActive("profile");
-  scrollToSlide("profile", { smooth: false });
+  scrollToSlide("profile", { smooth: false, preferLoop: MIDDLE_LOOP });
   requestAnimationFrame(() => {
-    scrollToSlide("profile", { smooth: false });
+    scrollToSlide("profile", { smooth: false, preferLoop: MIDDLE_LOOP });
   });
 
   document.body.classList.add("is-ready");
