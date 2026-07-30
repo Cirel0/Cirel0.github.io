@@ -1,32 +1,82 @@
 [
   {
-    "id": "game-alpha",
-    "name": "Project Alpha",
-    "placeId": null,
-    "role": "Lead Scripter",
-    "tags": ["Systems", "Combat"],
-    "blurb": "Core gameplay loops, combat networking, and progression systems.",
-    "image": "assets/games/game-alpha.svg",
-    "playUrl": null
+    "id": "enter-brainrot",
+    "name": "Enter Brainrot",
+    "placeId": 129954432457499,
+    "role": "Developer / Programmer",
+    "tags": ["Gameplay", "Systems"],
+    "blurb": "Scripting and systems work on Enter Brainrot.",
+    "image": "assets/games/enter-brainrot.png",
+    "playUrl": "https://www.roblox.com/games/129954432457499"
   },
   {
-    "id": "game-beta",
-    "name": "Project Beta",
-    "placeId": null,
-    "role": "Systems Programmer",
-    "tags": ["Economy", "Data"],
-    "blurb": "Economy balancing, inventory, and DataStore reliability.",
-    "image": "assets/games/game-beta.svg",
-    "playUrl": null
+    "id": "youtube-roblox-museum",
+    "name": "YouTube's Roblox Museum",
+    "placeId": 87445296052708,
+    "role": "Developer / Programmer",
+    "tags": ["Experience", "Systems"],
+    "blurb": "Programming contribution on YouTube's Roblox Museum.",
+    "image": "assets/games/youtube-roblox-museum.png",
+    "playUrl": "https://www.roblox.com/games/87445296052708"
   },
   {
-    "id": "game-gamma",
-    "name": "Project Gamma",
-    "placeId": null,
-    "role": "Gameplay Scripter",
-    "tags": ["UI", "UX"],
-    "blurb": "Responsive UI frameworks and client–server gameplay glue.",
-    "image": "assets/games/game-gamma.svg",
-    "playUrl": null
+    "id": "pirate-bridge-battles",
+    "name": "Pirate Bridge Battles!",
+    "placeId": 92586670057709,
+    "role": "Developer / Programmer",
+    "tags": ["Combat", "Gameplay"],
+    "blurb": "Gameplay and systems scripting for Pirate Bridge Battles!",
+    "image": "assets/games/pirate-bridge-battles.png",
+    "playUrl": "https://www.roblox.com/games/92586670057709"
+  },
+  {
+    "id": "grow-a-slime",
+    "name": "Grow a Slime",
+    "placeId": 83866907126369,
+    "role": "Developer / Programmer",
+    "tags": ["Systems", "Progression"],
+    "blurb": "Developer / programmer on Grow a Slime.",
+    "image": "assets/games/grow-a-slime.png",
+    "playUrl": "https://www.roblox.com/games/83866907126369"
+  },
+  {
+    "id": "kingdom-of-magic-tycoon",
+    "name": "Kingdom of Magic Tycoon [ALPHA]",
+    "placeId": 18608175830,
+    "role": "Developer / Programmer",
+    "tags": ["Tycoon", "Systems"],
+    "blurb": "Programming for Kingdom of Magic Tycoon.",
+    "image": "assets/games/kingdom-of-magic-tycoon.png",
+    "playUrl": "https://www.roblox.com/games/18608175830"
+  },
+  {
+    "id": "conveyor-fall-tower",
+    "name": "Conveyor Fall Tower",
+    "placeId": 126203415838533,
+    "role": "Developer / Programmer",
+    "tags": ["Obby", "Systems"],
+    "blurb": "Scripting contribution on Conveyor Fall Tower.",
+    "image": "assets/games/conveyor-fall-tower.png",
+    "playUrl": "https://www.roblox.com/games/126203415838533"
+  },
+  {
+    "id": "climb-67-slap-tower",
+    "name": "Climb 67 Slap Tower",
+    "placeId": 96639401941432,
+    "role": "Developer / Programmer",
+    "tags": ["Obby", "Gameplay"],
+    "blurb": "Developer / programmer on Climb 67 Slap Tower.",
+    "image": "assets/games/climb-67-slap-tower.png",
+    "playUrl": "https://www.roblox.com/games/96639401941432"
+  },
+  {
+    "id": "realm-wars",
+    "name": "REALM WARS! ✨",
+    "placeId": 17066091319,
+    "role": "Developer / Programmer",
+    "tags": ["Combat", "Systems"],
+    "blurb": "Programming work on REALM WARS!",
+    "image": "assets/games/realm-wars.png",
+    "playUrl": "https://www.roblox.com/games/17066091319"
   }
 ]

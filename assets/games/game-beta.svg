@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" role="img" aria-label="Project Beta placeholder">
-  <rect width="800" height="1000" fill="#1c1c1c"/>
-  <circle cx="400" cy="420" r="220" fill="#3a3a3a"/>
-  <circle cx="400" cy="420" r="110" fill="#d6d6d6"/>
-  <text x="400" y="880" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-size="36" letter-spacing="6">BETA</text>
-</svg>

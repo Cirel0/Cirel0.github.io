@@ -1,24 +1,65 @@
 {
-  "updatedAt": "2026-07-30T17:00:00.000Z",
+  "updatedAt": "2026-07-30T18:01:46.355Z",
   "totals": {
-    "playing": 1240,
-    "visits": 18500000
+    "playing": 10,
+    "visits": 9384824
   },
   "games": {
-    "game-alpha": {
-      "playing": 620,
-      "visits": 9200000,
-      "name": "Project Alpha"
+    "enter-brainrot": {
+      "playing": 0,
+      "visits": 122049,
+      "name": "Enter Brainrot",
+      "placeId": 129954432457499,
+      "universeId": 8808386032
     },
-    "game-beta": {
-      "playing": 410,
-      "visits": 6100000,
-      "name": "Project Beta"
+    "youtube-roblox-museum": {
+      "playing": 0,
+      "visits": 1930129,
+      "name": "YouTube's Roblox Museum",
+      "placeId": 87445296052708,
+      "universeId": 7899514634
     },
-    "game-gamma": {
-      "playing": 210,
-      "visits": 3200000,
-      "name": "Project Gamma"
+    "pirate-bridge-battles": {
+      "playing": 0,
+      "visits": 95279,
+      "name": "Pirate Bridge Battles!",
+      "placeId": 92586670057709,
+      "universeId": 8575258327
+    },
+    "grow-a-slime": {
+      "playing": 0,
+      "visits": 30991,
+      "name": "Grow a Slime",
+      "placeId": 83866907126369,
+      "universeId": 8554977584
+    },
+    "kingdom-of-magic-tycoon": {
+      "playing": 10,
+      "visits": 5781410,
+      "name": "Kingdom of Magic Tycoon [ALPHA]",
+      "placeId": 18608175830,
+      "universeId": 6305332511
+    },
+    "conveyor-fall-tower": {
+      "playing": 0,
+      "visits": 124054,
+      "name": "Conveyor Fall Tower",
+      "placeId": 126203415838533,
+      "universeId": 9733834837
+    },
+    "climb-67-slap-tower": {
+      "playing": 0,
+      "visits": 1065213,
+      "name": "Climb 67 Slap Tower",
+      "placeId": 96639401941432,
+      "universeId": 9224479873
+    },
+    "realm-wars": {
+      "playing": 0,
+      "visits": 235699,
+      "name": "REALM WARS! ✨",
+      "placeId": 17066091319,
+      "universeId": 5850146745
     }
   }
 }
