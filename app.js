@@ -205,6 +205,30 @@ function renderDetail(page) {
   `;
 }
 
+function scrollToSlide(id, { smooth = true } = {}) {
+  const slide = els.carousel.querySelector(`[data-id="${id}"]`);
+  if (!slide) return;
+
+  const top =
+    slide.offsetTop - (els.carousel.clientHeight - slide.offsetHeight) / 2;
+
+  if (!smooth) {
+    const prevSnap = els.carousel.style.scrollSnapType;
+    els.carousel.style.scrollSnapType = "none";
+    els.carousel.scrollTo({ top: Math.max(0, top), behavior: "auto" });
+    // Force layout before restoring snap so the browser doesn't re-jump
+    void els.carousel.offsetHeight;
+    els.carousel.style.scrollSnapType = prevSnap || "";
+    return;
+  }
+
+  state.syncing = true;
+  els.carousel.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+  window.setTimeout(() => {
+    state.syncing = false;
+  }, 450);
+}
+
 function setActive(id, { scroll = false } = {}) {
   const page = getPage(id);
   if (!page) return;
@@ -223,14 +247,7 @@ function setActive(id, { scroll = false } = {}) {
   renderDetail(page);
 
   if (scroll) {
-    const slide = els.carousel.querySelector(`[data-id="${page.id}"]`);
-    if (slide) {
-      state.syncing = true;
-      slide.scrollIntoView({ behavior: "smooth", block: "center" });
-      window.setTimeout(() => {
-        state.syncing = false;
-      }, 450);
-    }
+    scrollToSlide(page.id, { smooth: true });
   }
 }
 
@@ -359,7 +376,21 @@ async function init() {
   renderLegend();
   setupContact(profile);
   bindEvents();
-  setActive(state.pages[0]?.id || "profile");
+
+  const firstId = state.pages[0]?.id || "profile";
+  setActive(firstId);
+  scrollToSlide(firstId, { smooth: false });
+  requestAnimationFrame(() => {
+    scrollToSlide(firstId, { smooth: false });
+  });
+  window.addEventListener(
+    "load",
+    () => {
+      scrollToSlide(state.activeId || firstId, { smooth: false });
+    },
+    { once: true }
+  );
+
   document.body.classList.add("is-ready");
 }
 
