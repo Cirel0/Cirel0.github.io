@@ -32,6 +32,23 @@ function formatNumber(value) {
   }).format(n);
 }
 
+const ICONS = {
+  ccu: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  visits: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>`,
+};
+
+function statCard(label, value, icon) {
+  return `
+    <div class="stat">
+      <div class="stat-head">
+        <span class="stat-label">${label}</span>
+        <span class="stat-icon" aria-hidden="true">${ICONS[icon]}</span>
+      </div>
+      <span class="stat-value">${formatNumber(value)}</span>
+    </div>
+  `;
+}
+
 async function loadJSON(path) {
   const res = await fetch(path, { cache: "no-store" });
   if (!res.ok) throw new Error(`Failed to load ${path}`);
@@ -134,14 +151,8 @@ function renderDetail(page) {
     const t = totals();
     els.detail.innerHTML = `
       <div class="stat-grid">
-        <div class="stat">
-          <span class="stat-label">Total CCU</span>
-          <span class="stat-value">${formatNumber(t.playing)}</span>
-        </div>
-        <div class="stat">
-          <span class="stat-label">Total visits</span>
-          <span class="stat-value">${formatNumber(t.visits)}</span>
-        </div>
+        ${statCard("Total CCU", t.playing, "ccu")}
+        ${statCard("Total visits", t.visits, "visits")}
       </div>
       <p class="panel-body">Across all listed experiences. Stats refresh automatically.</p>
     `;
@@ -154,14 +165,8 @@ function renderDetail(page) {
     const playUrl = game.playUrl || (game.placeId ? `https://www.roblox.com/games/${game.placeId}` : null);
     els.detail.innerHTML = `
       <div class="stat-grid">
-        <div class="stat">
-          <span class="stat-label">Current CCU</span>
-          <span class="stat-value">${formatNumber(s.playing)}</span>
-        </div>
-        <div class="stat">
-          <span class="stat-label">Visits</span>
-          <span class="stat-value">${formatNumber(s.visits)}</span>
-        </div>
+        ${statCard("Current CCU", s.playing, "ccu")}
+        ${statCard("Visits", s.visits, "visits")}
       </div>
       ${
         playUrl
