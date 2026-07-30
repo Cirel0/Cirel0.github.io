@@ -215,9 +215,9 @@ body.is-ready {
 
 .carousel-wrap {
   --card-size: min(220px, 46vw);
-  --bracket-thickness: clamp(10px, 2.2vw, 14px);
-  --bracket-arm: clamp(28px, 5.5vw, 40px);
-  --bracket-height: calc(var(--card-size) + 12px);
+  --bracket-thickness: clamp(6px, 1.3vw, 9px);
+  --bracket-arm: clamp(16px, 3.2vw, 24px);
+  --bracket-height: calc(var(--card-size) + 4px);
   position: relative;
   z-index: 2;
   height: min(72vh, 760px);
@@ -225,7 +225,7 @@ body.is-ready {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: clamp(0.85rem, 1.8vw, 1.25rem);
+  gap: clamp(-0.55rem, -1.1vw, -0.35rem);
   overflow: visible;
   animation: rise 0.75s var(--ease) 0.04s both;
 }
