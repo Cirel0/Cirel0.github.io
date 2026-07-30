@@ -122,6 +122,7 @@ body.is-ready {
 }
 
 .stage {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(140px, 1fr) minmax(420px, 640px) minmax(140px, 1fr);
   gap: 0.75rem;
@@ -129,7 +130,7 @@ body.is-ready {
   flex: 1 1 auto;
   min-height: 0;
   padding: 0 2rem;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .panel {
@@ -144,12 +145,14 @@ body.is-ready {
 }
 
 .panel-left {
+  grid-column: 1;
   max-width: 280px;
   justify-self: start;
   animation: rise 0.7s var(--ease) both;
 }
 
 .panel-right {
+  grid-column: 3;
   justify-self: end;
   width: min(100%, 280px);
   gap: 2rem;
@@ -164,6 +167,15 @@ body.is-ready {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
@@ -222,16 +234,19 @@ body.is-ready {
   --bracket-arm: clamp(22px, 4vw, 30px);
   --bracket-overlap: 8px;
   --bracket-height: calc(var(--card-size) + 6px);
-  position: relative;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   z-index: 2;
-  align-self: center;
-  height: min(72vh, 100%);
+  width: var(--card-size);
+  height: min(72vh, 640px);
   max-height: 100%;
   min-height: 0;
   display: grid;
   place-items: center;
   overflow: visible;
-  animation: rise 0.75s var(--ease) 0.04s both;
+  animation: fade-in 0.75s var(--ease) 0.04s both;
 }
 
 .card-frame {
@@ -294,9 +309,10 @@ body.is-ready {
 }
 
 .slide {
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   scroll-snap-stop: always;
   height: 100%;
+  flex-shrink: 0;
   display: grid;
   place-items: center;
   padding: 0;
@@ -633,10 +649,12 @@ body.is-ready {
     min-height: 0;
     padding: 0.5rem 1.1rem 1.5rem;
     gap: 1.25rem;
+    overflow: visible;
   }
 
   .panel-left,
   .panel-right {
+    grid-column: 1;
     max-width: none;
     width: 100%;
     justify-self: stretch;
@@ -649,9 +667,16 @@ body.is-ready {
 
   .carousel-wrap {
     order: 2;
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    width: var(--card-size);
+    justify-self: center;
     align-self: auto;
     height: min(62vh, 560px);
     max-height: none;
+    animation: rise 0.75s var(--ease) 0.04s both;
   }
 
   .panel-right {

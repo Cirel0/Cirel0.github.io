@@ -209,21 +209,25 @@ function scrollToSlide(id, { smooth = true } = {}) {
   const slide = els.carousel.querySelector(`[data-id="${id}"]`);
   if (!slide) return;
 
-  const top =
-    slide.offsetTop - (els.carousel.clientHeight - slide.offsetHeight) / 2;
+  const index = Number(slide.dataset.index) || 0;
+  const top = index * els.carousel.clientHeight;
+
+  state.syncing = true;
 
   if (!smooth) {
     const prevSnap = els.carousel.style.scrollSnapType;
     els.carousel.style.scrollSnapType = "none";
-    els.carousel.scrollTo({ top: Math.max(0, top), behavior: "auto" });
+    els.carousel.scrollTo({ top, behavior: "auto" });
     // Force layout before restoring snap so the browser doesn't re-jump
     void els.carousel.offsetHeight;
     els.carousel.style.scrollSnapType = prevSnap || "";
+    requestAnimationFrame(() => {
+      state.syncing = false;
+    });
     return;
   }
 
-  state.syncing = true;
-  els.carousel.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+  els.carousel.scrollTo({ top, behavior: "smooth" });
   window.setTimeout(() => {
     state.syncing = false;
   }, 450);
@@ -352,6 +356,16 @@ function bindEvents() {
         : Math.max(0, index - 1);
     setActive(state.pages[next].id, { scroll: true });
   });
+
+  let resizeTick = false;
+  window.addEventListener("resize", () => {
+    if (resizeTick || !state.activeId) return;
+    resizeTick = true;
+    requestAnimationFrame(() => {
+      resizeTick = false;
+      scrollToSlide(state.activeId, { smooth: false });
+    });
+  });
 }
 
 async function init() {
@@ -383,13 +397,6 @@ async function init() {
   requestAnimationFrame(() => {
     scrollToSlide(firstId, { smooth: false });
   });
-  window.addEventListener(
-    "load",
-    () => {
-      scrollToSlide(state.activeId || firstId, { smooth: false });
-    },
-    { once: true }
-  );
 
   document.body.classList.add("is-ready");
 }
