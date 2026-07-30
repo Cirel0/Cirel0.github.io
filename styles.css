@@ -324,10 +324,7 @@ body.is-ready {
   );
 }
 
-.carousel::before,
-.carousel::after {
-  content: "";
-  display: block;
+.reel-spacer {
   height: calc(var(--slot-height) * 2);
   flex-shrink: 0;
   pointer-events: none;

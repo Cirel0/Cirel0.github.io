@@ -1,5 +1,6 @@
 const state = {
   pages: [],
+  reel: [],
   profile: null,
   games: [],
   testimonials: [],
@@ -7,6 +8,7 @@ const state = {
   activeId: null,
   testimonialIndex: 0,
   syncing: false,
+  syncTimer: null,
 };
 
 const els = {
@@ -55,34 +57,49 @@ async function loadJSON(path) {
   return res.json();
 }
 
+function gamePage(game) {
+  return {
+    id: game.id,
+    type: "game",
+    label: game.name,
+    image: game.image,
+    game,
+  };
+}
+
 function buildPages(profile, games, testimonials) {
-  const pages = [
-    {
-      id: "profile",
-      type: "profile",
-      label: profile.name || "Profile",
-      image: profile.avatar,
-    },
-    ...games.map((game) => ({
-      id: game.id,
-      type: "game",
-      label: game.name,
-      image: game.image,
-      game,
-    })),
-    {
-      id: "testimonials",
-      type: "testimonials",
-      label: "Testimonials",
-      image: "assets/testimonials.svg",
-      testimonials,
-    },
+  const profilePage = {
+    id: "profile",
+    type: "profile",
+    label: profile.name || "Profile",
+    image: profile.avatar,
+  };
+  const gamePages = games.map(gamePage);
+  const testimonialsPage = {
+    id: "testimonials",
+    type: "testimonials",
+    label: "Testimonials",
+    image: "assets/testimonials.svg",
+    testimonials,
+  };
+
+  // Legend order: Profile → games → Testimonials
+  const pages = [profilePage, ...gamePages, testimonialsPage];
+
+  // Reel order: first half of games → Profile → second half → Testimonials
+  const mid = Math.ceil(gamePages.length / 2);
+  const reel = [
+    ...gamePages.slice(0, mid),
+    profilePage,
+    ...gamePages.slice(mid),
+    testimonialsPage,
   ];
-  return pages;
+
+  return { pages, reel };
 }
 
 function renderCarousel() {
-  els.carousel.innerHTML = state.pages
+  const slides = state.reel
     .map(
       (page, index) => `
       <article class="slide" data-id="${page.id}" data-index="${index}">
@@ -92,6 +109,12 @@ function renderCarousel() {
       </article>`
     )
     .join("");
+
+  els.carousel.innerHTML = `
+    <div class="reel-spacer" aria-hidden="true"></div>
+    ${slides}
+    <div class="reel-spacer" aria-hidden="true"></div>
+  `;
 }
 
 function renderLegend() {
@@ -107,6 +130,10 @@ function renderLegend() {
 
 function getPage(id) {
   return state.pages.find((page) => page.id === id) || state.pages[0];
+}
+
+function reelIndexFor(id) {
+  return state.reel.findIndex((page) => page.id === id);
 }
 
 function gameStats(gameId) {
@@ -205,38 +232,54 @@ function renderDetail(page) {
   `;
 }
 
-function slideScrollTop(slide) {
-  return (
-    slide.offsetTop -
-    (els.carousel.clientHeight - slide.offsetHeight) / 2
-  );
+function slotHeight() {
+  const slide = els.carousel.querySelector(".slide");
+  return slide?.offsetHeight || els.carousel.clientHeight / 5;
+}
+
+function slideScrollTop(id) {
+  const index = reelIndexFor(id);
+  if (index < 0) return 0;
+  return index * slotHeight();
+}
+
+function endSync() {
+  state.syncing = false;
+  if (state.syncTimer) {
+    window.clearTimeout(state.syncTimer);
+    state.syncTimer = null;
+  }
+}
+
+function beginSync(ms = 700) {
+  state.syncing = true;
+  if (state.syncTimer) window.clearTimeout(state.syncTimer);
+  state.syncTimer = window.setTimeout(() => {
+    endSync();
+  }, ms);
 }
 
 function scrollToSlide(id, { smooth = true } = {}) {
   const slide = els.carousel.querySelector(`[data-id="${id}"]`);
   if (!slide) return;
 
-  const top = slideScrollTop(slide);
+  const top = slideScrollTop(id);
 
-  state.syncing = true;
+  beginSync(smooth ? 800 : 100);
 
   if (!smooth) {
     const prevSnap = els.carousel.style.scrollSnapType;
     els.carousel.style.scrollSnapType = "none";
     els.carousel.scrollTo({ top, behavior: "auto" });
-    // Force layout before restoring snap so the browser doesn't re-jump
     void els.carousel.offsetHeight;
     els.carousel.style.scrollSnapType = prevSnap || "";
     requestAnimationFrame(() => {
-      state.syncing = false;
+      endSync();
     });
     return;
   }
 
   els.carousel.scrollTo({ top, behavior: "smooth" });
-  window.setTimeout(() => {
-    state.syncing = false;
-  }, 450);
 }
 
 function setActive(id, { scroll = false } = {}) {
@@ -346,21 +389,28 @@ function bindEvents() {
     scrollTick = true;
     requestAnimationFrame(() => {
       scrollTick = false;
+      if (state.syncing) return;
       const id = nearestSlideId();
       if (id && id !== state.activeId) setActive(id);
     });
   });
 
+  els.carousel.addEventListener("scrollend", () => {
+    endSync();
+    const id = nearestSlideId();
+    if (id && id !== state.activeId) setActive(id);
+  });
+
   window.addEventListener("keydown", (event) => {
     if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
-    const index = state.pages.findIndex((page) => page.id === state.activeId);
+    const index = reelIndexFor(state.activeId);
     if (index < 0) return;
     event.preventDefault();
     const next =
       event.key === "ArrowDown"
-        ? Math.min(state.pages.length - 1, index + 1)
+        ? Math.min(state.reel.length - 1, index + 1)
         : Math.max(0, index - 1);
-    setActive(state.pages[next].id, { scroll: true });
+    setActive(state.reel[next].id, { scroll: true });
   });
 
   let resizeTick = false;
@@ -390,18 +440,20 @@ async function init() {
   state.games = games;
   state.testimonials = testimonials;
   state.stats = stats;
-  state.pages = buildPages(profile, games, testimonials);
+
+  const { pages, reel } = buildPages(profile, games, testimonials);
+  state.pages = pages;
+  state.reel = reel;
 
   renderCarousel();
   renderLegend();
   setupContact(profile);
   bindEvents();
 
-  const firstId = state.pages[0]?.id || "profile";
-  setActive(firstId);
-  scrollToSlide(firstId, { smooth: false });
+  setActive("profile");
+  scrollToSlide("profile", { smooth: false });
   requestAnimationFrame(() => {
-    scrollToSlide(firstId, { smooth: false });
+    scrollToSlide("profile", { smooth: false });
   });
 
   document.body.classList.add("is-ready");
