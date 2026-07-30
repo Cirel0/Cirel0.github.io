@@ -205,12 +205,18 @@ function renderDetail(page) {
   `;
 }
 
+function slideScrollTop(slide) {
+  return (
+    slide.offsetTop -
+    (els.carousel.clientHeight - slide.offsetHeight) / 2
+  );
+}
+
 function scrollToSlide(id, { smooth = true } = {}) {
   const slide = els.carousel.querySelector(`[data-id="${id}"]`);
   if (!slide) return;
 
-  const index = Number(slide.dataset.index) || 0;
-  const top = index * els.carousel.clientHeight;
+  const top = slideScrollTop(slide);
 
   state.syncing = true;
 
