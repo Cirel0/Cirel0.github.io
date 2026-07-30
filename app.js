@@ -340,24 +340,28 @@ function normalizeLoopPosition() {
   return true;
 }
 
-function endSync() {
-  normalizeLoopPosition();
-  restoreSnap();
-  state.syncing = false;
-  state.scrollTargetId = null;
+function clearSyncTimer() {
   if (state.syncTimer) {
     window.clearTimeout(state.syncTimer);
     state.syncTimer = null;
   }
+}
+
+function endSync() {
+  clearSyncTimer();
+  normalizeLoopPosition();
+  restoreSnap();
+  state.syncing = false;
+  state.scrollTargetId = null;
   requestAnimationFrame(() => {
     const id = nearestSlideId();
     if (id) setActive(id);
   });
 }
 
-function beginSync(ms = 500) {
+function beginSync(ms = 400) {
   state.syncing = true;
-  if (state.syncTimer) window.clearTimeout(state.syncTimer);
+  clearSyncTimer();
   state.syncTimer = window.setTimeout(() => {
     endSync();
   }, ms);
@@ -371,15 +375,11 @@ function scrollToSlide(id, { smooth = true, preferLoop = null } = {}) {
 
   const top = Math.max(0, slideScrollTop(slide));
   state.scrollTargetId = id;
-  beginSync(smooth ? 600 : 120);
-  disableSnap();
-
-  els.carousel.scrollTo({
-    top,
-    behavior: smooth ? "smooth" : "auto",
-  });
 
   if (!smooth) {
+    beginSync(120);
+    disableSnap();
+    els.carousel.scrollTo({ top, behavior: "auto" });
     void els.carousel.offsetHeight;
     els.carousel.scrollTo({
       top: Math.max(0, slideScrollTop(slide)),
@@ -388,7 +388,12 @@ function scrollToSlide(id, { smooth = true, preferLoop = null } = {}) {
     requestAnimationFrame(() => {
       endSync();
     });
+    return;
   }
+
+  // Smooth legend/arrow scrolls: keep snap on so wheel isn't fighting none-snap
+  beginSync(500);
+  els.carousel.scrollTo({ top, behavior: "smooth" });
 }
 
 function setActive(id, { scroll = false } = {}) {
@@ -475,11 +480,7 @@ function bindEvents() {
 
   let scrollTick = false;
   els.carousel.addEventListener("scroll", () => {
-    if (state.wrapping) return;
-    if (!state.syncing) {
-      normalizeLoopPosition();
-    }
-    if (state.syncing || scrollTick) return;
+    if (state.wrapping || state.syncing || scrollTick) return;
     scrollTick = true;
     requestAnimationFrame(() => {
       scrollTick = false;
@@ -552,9 +553,6 @@ async function init() {
 
   setActive("profile");
   scrollToSlide("profile", { smooth: false, preferLoop: MIDDLE_LOOP });
-  requestAnimationFrame(() => {
-    scrollToSlide("profile", { smooth: false, preferLoop: MIDDLE_LOOP });
-  });
 
   document.body.classList.add("is-ready");
 }

@@ -329,7 +329,7 @@ body.is-ready {
 
 .slide {
   scroll-snap-align: center;
-  scroll-snap-stop: always;
+  scroll-snap-stop: normal;
   height: var(--slot-height);
   flex-shrink: 0;
   display: grid;
