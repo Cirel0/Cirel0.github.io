@@ -9,6 +9,8 @@ const state = {
   testimonialIndex: 0,
   syncing: false,
   syncTimer: null,
+  savedSnap: null,
+  scrollTargetId: null,
 };
 
 const els = {
@@ -232,26 +234,56 @@ function renderDetail(page) {
   `;
 }
 
-function slotHeight() {
-  const slide = els.carousel.querySelector(".slide");
-  return slide?.offsetHeight || els.carousel.clientHeight / 5;
+function nearestSlideId() {
+  const slides = [...els.carousel.querySelectorAll(".slide")];
+  const rootRect = els.carousel.getBoundingClientRect();
+  const mid = rootRect.top + rootRect.height / 2;
+  let best = null;
+  let bestDist = Infinity;
+
+  for (const slide of slides) {
+    const rect = slide.getBoundingClientRect();
+    const slideMid = rect.top + rect.height / 2;
+    const dist = Math.abs(slideMid - mid);
+    if (dist < bestDist) {
+      bestDist = dist;
+      best = slide.dataset.id;
+    }
+  }
+  return best;
 }
 
-function slideScrollTop(id) {
-  const index = reelIndexFor(id);
-  if (index < 0) return 0;
-  return index * slotHeight();
+function slideScrollTop(slide) {
+  return (
+    slide.offsetTop -
+    (els.carousel.clientHeight - slide.offsetHeight) / 2
+  );
+}
+
+function restoreSnap() {
+  if (state.savedSnap != null) {
+    els.carousel.style.scrollSnapType = state.savedSnap;
+    state.savedSnap = null;
+  } else {
+    els.carousel.style.scrollSnapType = "";
+  }
 }
 
 function endSync() {
+  restoreSnap();
   state.syncing = false;
+  state.scrollTargetId = null;
   if (state.syncTimer) {
     window.clearTimeout(state.syncTimer);
     state.syncTimer = null;
   }
+  requestAnimationFrame(() => {
+    const id = nearestSlideId();
+    if (id) setActive(id);
+  });
 }
 
-function beginSync(ms = 700) {
+function beginSync(ms = 500) {
   state.syncing = true;
   if (state.syncTimer) window.clearTimeout(state.syncTimer);
   state.syncTimer = window.setTimeout(() => {
@@ -263,23 +295,30 @@ function scrollToSlide(id, { smooth = true } = {}) {
   const slide = els.carousel.querySelector(`[data-id="${id}"]`);
   if (!slide) return;
 
-  const top = slideScrollTop(id);
+  const top = Math.max(0, slideScrollTop(slide));
+  state.scrollTargetId = id;
+  beginSync(smooth ? 600 : 120);
 
-  beginSync(smooth ? 800 : 100);
+  if (state.savedSnap == null) {
+    state.savedSnap = els.carousel.style.scrollSnapType;
+  }
+  els.carousel.style.scrollSnapType = "none";
+
+  els.carousel.scrollTo({
+    top,
+    behavior: smooth ? "smooth" : "auto",
+  });
 
   if (!smooth) {
-    const prevSnap = els.carousel.style.scrollSnapType;
-    els.carousel.style.scrollSnapType = "none";
-    els.carousel.scrollTo({ top, behavior: "auto" });
     void els.carousel.offsetHeight;
-    els.carousel.style.scrollSnapType = prevSnap || "";
+    els.carousel.scrollTo({
+      top: Math.max(0, slideScrollTop(slide)),
+      behavior: "auto",
+    });
     requestAnimationFrame(() => {
       endSync();
     });
-    return;
   }
-
-  els.carousel.scrollTo({ top, behavior: "smooth" });
 }
 
 function setActive(id, { scroll = false } = {}) {
@@ -302,25 +341,6 @@ function setActive(id, { scroll = false } = {}) {
   if (scroll) {
     scrollToSlide(page.id, { smooth: true });
   }
-}
-
-function nearestSlideId() {
-  const slides = [...els.carousel.querySelectorAll(".slide")];
-  const rootRect = els.carousel.getBoundingClientRect();
-  const mid = rootRect.top + rootRect.height / 2;
-  let best = null;
-  let bestDist = Infinity;
-
-  for (const slide of slides) {
-    const rect = slide.getBoundingClientRect();
-    const slideMid = rect.top + rect.height / 2;
-    const dist = Math.abs(slideMid - mid);
-    if (dist < bestDist) {
-      bestDist = dist;
-      best = slide.dataset.id;
-    }
-  }
-  return best;
 }
 
 function updateClock() {
@@ -396,7 +416,10 @@ function bindEvents() {
   });
 
   els.carousel.addEventListener("scrollend", () => {
-    endSync();
+    if (state.syncing) {
+      endSync();
+      return;
+    }
     const id = nearestSlideId();
     if (id && id !== state.activeId) setActive(id);
   });

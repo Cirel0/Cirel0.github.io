@@ -311,7 +311,6 @@ body.is-ready {
   overflow-x: hidden;
   overflow-anchor: none;
   scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
   overscroll-behavior: contain;
   scrollbar-width: none;
   outline: none;
