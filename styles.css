@@ -232,11 +232,19 @@ body.is-ready {
 .paren {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(7rem, 18vh, 12rem);
-  line-height: 0.8;
+  font-size: clamp(6.5rem, 16vh, 11rem);
+  line-height: 0.75;
   color: var(--frame);
   user-select: none;
-  transform: translateY(-2%);
+  transform: translateY(-1%);
+}
+
+.paren-left {
+  transform: translate(-0.08em, -1%);
+}
+
+.paren-right {
+  transform: translate(0.08em, -1%);
 }
 
 .carousel {
@@ -272,8 +280,8 @@ body.is-ready {
 }
 
 .slide-card {
-  width: min(78%, 250px);
-  aspect-ratio: 4 / 5;
+  width: min(82%, 260px);
+  aspect-ratio: 1 / 1;
   border-radius: 2px;
   overflow: hidden;
   background: #222;
