@@ -157,13 +157,13 @@ body.is-ready {
 .panel-left {
   grid-column: 1;
   max-width: 280px;
-  justify-self: start;
+  justify-self: center;
   animation: rise 0.7s var(--ease) both;
 }
 
 .panel-right {
   grid-column: 3;
-  justify-self: end;
+  justify-self: center;
   width: min(100%, 280px);
   gap: 2rem;
   align-items: flex-end;
