@@ -215,45 +215,53 @@ body.is-ready {
 
 .carousel-wrap {
   --card-size: min(220px, 46vw);
-  --bracket-thickness: clamp(6px, 1.3vw, 9px);
-  --bracket-arm: clamp(16px, 3.2vw, 24px);
-  --bracket-height: calc(var(--card-size) + 4px);
+  --bracket-thickness: clamp(8px, 1.6vw, 11px);
+  --bracket-arm: clamp(22px, 4vw, 30px);
+  --bracket-overlap: 8px;
+  --bracket-height: calc(var(--card-size) + 6px);
   position: relative;
   z-index: 2;
   height: min(72vh, 760px);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(-0.55rem, -1.1vw, -0.35rem);
+  display: grid;
+  place-items: center;
   overflow: visible;
   animation: rise 0.75s var(--ease) 0.04s both;
 }
 
-.paren {
-  flex: 0 0 auto;
+.card-frame {
   position: relative;
+  width: var(--card-size);
+  height: 100%;
+  overflow: visible;
+}
+
+.paren {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
   z-index: 5;
   width: var(--bracket-arm);
   height: var(--bracket-height);
   box-sizing: border-box;
   border-style: solid;
   border-color: var(--ink);
+  transform: translateY(-50%);
   user-select: none;
 }
 
 .paren-left {
+  right: calc(100% - var(--bracket-overlap));
   border-width: var(--bracket-thickness) 0 var(--bracket-thickness)
     var(--bracket-thickness);
 }
 
 .paren-right {
+  left: calc(100% - var(--bracket-overlap));
   border-width: var(--bracket-thickness) var(--bracket-thickness)
     var(--bracket-thickness) 0;
 }
 
 .carousel {
-  flex: 0 0 var(--card-size);
   position: relative;
   z-index: 1;
   width: var(--card-size);
