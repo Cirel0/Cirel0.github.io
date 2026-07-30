@@ -157,16 +157,26 @@ body.is-ready {
 .panel-left {
   grid-column: 1;
   max-width: 280px;
-  justify-self: end;
+  justify-self: start;
   animation: rise 0.7s var(--ease) both;
 }
 
 .panel-right {
   grid-column: 3;
-  justify-self: start;
+  justify-self: end;
   width: min(100%, 280px);
   gap: 2rem;
+  align-items: flex-end;
+  text-align: right;
   animation: rise 0.7s var(--ease) 0.08s both;
+}
+
+.panel-right .stat-head {
+  justify-content: flex-end;
+}
+
+.panel-right .legend {
+  align-items: flex-end;
 }
 
 @keyframes rise {
@@ -235,7 +245,7 @@ body.is-ready {
   --bracket-thickness: clamp(8px, 1.6vw, 11px);
   --bracket-arm: clamp(22px, 4vw, 30px);
   --bracket-overlap: 8px;
-  --bracket-height: calc(var(--card-size) + 6px);
+  --bracket-height: calc(var(--card-size) + 28px);
   grid-column: 2;
   position: relative;
   z-index: 2;
@@ -579,6 +589,16 @@ body.is-ready {
   .panel-right {
     order: 3;
     gap: 1.5rem;
+    align-items: stretch;
+    text-align: left;
+  }
+
+  .panel-right .stat-head {
+    justify-content: flex-start;
+  }
+
+  .panel-right .legend {
+    align-items: flex-start;
   }
 
   .stat-value {
