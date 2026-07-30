@@ -117,10 +117,10 @@ function logicalIndex(visualIndex = state.visualIndex) {
 }
 
 function slotHeight() {
-  const raw = getComputedStyle(els.carousel).getPropertyValue("--slot-height");
-  const parsed = Number.parseFloat(raw);
-  if (Number.isFinite(parsed) && parsed > 0) return parsed;
-  return els.carousel.clientHeight / VISIBLE_SLOTS;
+  const slide = els.carousel?.querySelector(".slide");
+  if (slide?.offsetHeight) return slide.offsetHeight;
+  const fallback = els.carousel?.clientHeight / VISIBLE_SLOTS;
+  return fallback > 0 ? fallback : 168;
 }
 
 function trackOffsetFor(visualIndex) {
@@ -151,6 +151,16 @@ function wrapVisualIndexIfNeeded() {
 
   state.visualIndex = next;
   applyTrackTransform({ animate: false });
+}
+
+function wheelDelta(event) {
+  if (event.deltaY) return event.deltaY;
+  if (event.deltaX) return event.deltaX;
+  if (typeof event.wheelDelta === "number" && event.wheelDelta) {
+    return -event.wheelDelta;
+  }
+  if (typeof event.detail === "number" && event.detail) return event.detail;
+  return 0;
 }
 
 function renderCarousel() {
@@ -429,25 +439,49 @@ function bindEvents() {
     }
   });
 
-  // Whole-page wheel: body is overflow:hidden, so native scroll never moves the reel.
-  // Listen on window so left/right panels still drive the carousel.
+  // Capture-phase document listener so wheel works over panels/links and
+  // isn't lost when body overflow is hidden (no native page scroll).
   let wheelLock = false;
-  window.addEventListener(
-    "wheel",
-    (event) => {
-      if (event.target.closest?.("#contact, a, input, textarea, select")) return;
-      event.preventDefault();
-      if (wheelLock || state.animating) return;
-      const delta = event.deltaY === 0 ? event.deltaX : event.deltaY;
-      if (delta === 0) return;
-      wheelLock = true;
-      step(delta > 0 ? 1 : -1);
-      window.setTimeout(() => {
-        wheelLock = false;
-      }, 320);
-    },
-    { passive: false }
-  );
+  let wheelAcc = 0;
+  const onWheel = (event) => {
+    const target = event.target;
+    if (
+      target &&
+      typeof target.closest === "function" &&
+      target.closest("input, textarea, select, [contenteditable='true']")
+    ) {
+      return;
+    }
+
+    const delta = wheelDelta(event);
+    if (!delta) return;
+
+    event.preventDefault();
+
+    // Accumulate small pixel deltas (trackpads / smooth-scroll mice)
+    wheelAcc += delta;
+    const threshold = event.deltaMode === 0 ? 40 : 1;
+    if (Math.abs(wheelAcc) < threshold) return;
+    if (wheelLock) {
+      wheelAcc = 0;
+      return;
+    }
+
+    const direction = wheelAcc > 0 ? 1 : -1;
+    wheelAcc = 0;
+    wheelLock = true;
+    step(direction);
+    window.setTimeout(() => {
+      wheelLock = false;
+    }, 280);
+  };
+
+  document.addEventListener("wheel", onWheel, { passive: false, capture: true });
+  // Older mouse drivers still emit mousewheel
+  document.addEventListener("mousewheel", onWheel, {
+    passive: false,
+    capture: true,
+  });
 
   window.addEventListener("keydown", (event) => {
     if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
