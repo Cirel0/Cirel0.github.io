@@ -127,6 +127,7 @@ body.is-ready {
   position: relative;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: minmax(0, 1fr);
   gap: 1.5rem 2rem;
   align-items: center;
   flex: 1 1 0;
