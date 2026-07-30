@@ -120,7 +120,7 @@ body.is-ready {
 
 .stage {
   display: grid;
-  grid-template-columns: minmax(180px, 1fr) minmax(260px, 420px) minmax(200px, 1fr);
+  grid-template-columns: minmax(180px, 1fr) minmax(320px, 520px) minmax(200px, 1fr);
   gap: 1rem;
   align-items: center;
   height: calc(100vh - 7.5rem);
@@ -211,8 +211,8 @@ body.is-ready {
 }
 
 .carousel-wrap {
-  --card-size: min(260px, 56vw);
-  --bracket-gap: clamp(1.75rem, 3.5vw, 2.75rem);
+  --card-size: min(280px, 58vw);
+  --bracket-gap: clamp(1rem, 2vw, 1.5rem);
   position: relative;
   height: min(72vh, 760px);
   display: grid;
@@ -226,33 +226,34 @@ body.is-ready {
   top: 50%;
   left: 50%;
   z-index: 3;
-  width: calc(var(--card-size) + (var(--bracket-gap) * 2) + 1.25rem);
+  width: var(--card-size);
   height: var(--card-size);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   transform: translate(-50%, -50%);
-  padding: 0;
 }
 
 .paren {
+  position: absolute;
+  top: 50%;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: calc(var(--card-size) * 0.92);
   line-height: 0.7;
   color: var(--frame);
   user-select: none;
-  width: 0.55em;
+  width: 0.42em;
   text-align: center;
-  flex-shrink: 0;
 }
 
 .paren-left {
-  transform: translateX(-0.05em);
+  left: 0;
+  text-align: right;
+  transform: translate(calc(-100% - var(--bracket-gap)), -50%);
 }
 
 .paren-right {
-  transform: translateX(0.05em);
+  right: 0;
+  text-align: left;
+  transform: translate(calc(100% + var(--bracket-gap)), -50%);
 }
 
 .carousel {
@@ -291,6 +292,7 @@ body.is-ready {
   width: var(--card-size);
   height: var(--card-size);
   aspect-ratio: 1 / 1;
+  max-width: 100%;
   border-radius: 2px;
   overflow: hidden;
   background: #222;
@@ -521,7 +523,7 @@ body.is-ready {
   }
 
   .carousel-wrap {
-    --card-size: min(240px, 62vw);
+    --card-size: min(260px, 58vw);
   }
 
   .site-footer {
