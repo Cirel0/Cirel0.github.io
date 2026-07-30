@@ -211,11 +211,11 @@ body.is-ready {
 }
 
 .carousel-wrap {
-  --card-size: min(280px, 58vw);
-  --bracket-gap: clamp(0.55rem, 1.2vw, 0.85rem);
-  --bracket-thickness: clamp(11px, 2.4vw, 16px);
-  --bracket-arm: clamp(36px, 7vw, 52px);
-  --bracket-height: calc(var(--card-size) + var(--bracket-thickness) * 2 + 10px);
+  --frame-size: min(320px, 64vw);
+  --card-size: min(200px, 42vw);
+  --bracket-thickness: clamp(12px, 2.6vw, 18px);
+  --bracket-arm: clamp(40px, 7.5vw, 56px);
+  --bracket-height: calc(var(--frame-size) + 12px);
   position: relative;
   height: min(72vh, 760px);
   display: grid;
@@ -229,7 +229,7 @@ body.is-ready {
   top: 50%;
   left: 50%;
   z-index: 3;
-  width: var(--card-size);
+  width: var(--frame-size);
   height: var(--bracket-height);
   transform: translate(-50%, -50%);
 }
@@ -246,13 +246,13 @@ body.is-ready {
 }
 
 .paren-left {
-  right: calc(100% + var(--bracket-gap));
+  right: 100%;
   border-width: var(--bracket-thickness) 0 var(--bracket-thickness)
     var(--bracket-thickness);
 }
 
 .paren-right {
-  left: calc(100% + var(--bracket-gap));
+  left: 100%;
   border-width: var(--bracket-thickness) var(--bracket-thickness)
     var(--bracket-thickness) 0;
 }
@@ -524,7 +524,8 @@ body.is-ready {
   }
 
   .carousel-wrap {
-    --card-size: min(260px, 58vw);
+    --frame-size: min(280px, 70vw);
+    --card-size: min(176px, 46vw);
   }
 
   .site-footer {
