@@ -120,12 +120,13 @@ body.is-ready {
 
 .stage {
   display: grid;
-  grid-template-columns: minmax(180px, 1fr) minmax(320px, 520px) minmax(200px, 1fr);
+  grid-template-columns: minmax(160px, 1fr) minmax(360px, 560px) minmax(160px, 1fr);
   gap: 1rem;
   align-items: center;
   height: calc(100vh - 7.5rem);
   height: calc(100dvh - 7.5rem);
   padding: 0 2rem 1rem;
+  overflow: visible;
 }
 
 .panel {
@@ -211,15 +212,14 @@ body.is-ready {
 }
 
 .carousel-wrap {
-  --frame-size: min(320px, 64vw);
   --card-size: min(200px, 42vw);
-  --bracket-thickness: clamp(12px, 2.6vw, 18px);
-  --bracket-arm: clamp(40px, 7.5vw, 56px);
-  --bracket-height: calc(var(--frame-size) + 12px);
+  --paren-size: calc(var(--card-size) * 1.4);
+  --frame-width: calc(var(--card-size) + var(--paren-size) * 1.2);
   position: relative;
   height: min(72vh, 760px);
   display: grid;
   place-items: center;
+  overflow: visible;
   animation: rise 0.75s var(--ease) 0.04s both;
 }
 
@@ -228,36 +228,39 @@ body.is-ready {
   position: absolute;
   top: 50%;
   left: 50%;
-  z-index: 3;
-  width: var(--frame-size);
-  height: var(--bracket-height);
+  z-index: 4;
+  width: var(--frame-width);
+  height: var(--paren-size);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   transform: translate(-50%, -50%);
+  overflow: visible;
 }
 
 .paren {
-  position: absolute;
-  top: 50%;
-  width: var(--bracket-arm);
-  height: var(--bracket-height);
-  box-sizing: border-box;
-  border-style: solid;
-  border-color: var(--frame);
-  transform: translateY(-50%);
+  flex: 0 0 auto;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--paren-size);
+  line-height: 0.7;
+  color: var(--frame);
+  user-select: none;
+  width: 0.34em;
+  text-align: center;
 }
 
 .paren-left {
-  right: 100%;
-  border-width: var(--bracket-thickness) 0 var(--bracket-thickness)
-    var(--bracket-thickness);
+  text-align: left;
 }
 
 .paren-right {
-  left: 100%;
-  border-width: var(--bracket-thickness) var(--bracket-thickness)
-    var(--bracket-thickness) 0;
+  text-align: right;
 }
 
 .carousel {
+  position: relative;
+  z-index: 1;
   width: var(--card-size);
   height: 100%;
   overflow-y: auto;
@@ -524,8 +527,7 @@ body.is-ready {
   }
 
   .carousel-wrap {
-    --frame-size: min(280px, 70vw);
-    --card-size: min(176px, 46vw);
+    --card-size: min(180px, 46vw);
   }
 
   .site-footer {
