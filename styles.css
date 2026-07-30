@@ -307,13 +307,9 @@ body.is-ready {
   z-index: 1;
   width: var(--card-size);
   height: var(--carousel-height);
-  overflow-y: auto;
-  overflow-x: hidden;
-  overflow-anchor: none;
-  scroll-snap-type: y mandatory;
-  overscroll-behavior: contain;
-  scrollbar-width: none;
+  overflow: hidden;
   outline: none;
+  touch-action: none;
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
@@ -323,13 +319,18 @@ body.is-ready {
   );
 }
 
-.carousel::-webkit-scrollbar {
-  display: none;
+.reel-track {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+  transition: transform 0.45s var(--ease);
+}
+
+.reel-track.is-jumping {
+  transition: none;
 }
 
 .slide {
-  scroll-snap-align: center;
-  scroll-snap-stop: normal;
   height: var(--slot-height);
   flex-shrink: 0;
   display: grid;
