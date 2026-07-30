@@ -15,6 +15,7 @@ const state = {
   /** Absolute index into the tripled track (0 .. 3N-1) */
   visualIndex: 0,
   animating: false,
+  animTimer: null,
 };
 
 const els = {
@@ -170,9 +171,17 @@ function renderCarousel() {
   els.track.addEventListener("transitionend", onTrackTransitionEnd);
 }
 
+function clearAnimating() {
+  state.animating = false;
+  if (state.animTimer) {
+    window.clearTimeout(state.animTimer);
+    state.animTimer = null;
+  }
+}
+
 function onTrackTransitionEnd(event) {
   if (event.target !== els.track || event.propertyName !== "transform") return;
-  state.animating = false;
+  clearAnimating();
   wrapVisualIndexIfNeeded();
 }
 
@@ -318,15 +327,26 @@ function goToVisualIndex(nextIndex, { animate = true } = {}) {
   const n = reelCount();
   if (!n) return;
 
+  const moved = nextIndex !== state.visualIndex;
   state.visualIndex = nextIndex;
-  state.animating = animate;
-  applyTrackTransform({ animate });
-  syncActiveFromVisual();
 
-  if (!animate) {
+  if (!animate || !moved) {
+    clearAnimating();
+    applyTrackTransform({ animate: false });
+    syncActiveFromVisual();
     wrapVisualIndexIfNeeded();
-    state.animating = false;
+    return;
   }
+
+  state.animating = true;
+  if (state.animTimer) window.clearTimeout(state.animTimer);
+  state.animTimer = window.setTimeout(() => {
+    clearAnimating();
+    wrapVisualIndexIfNeeded();
+  }, 600);
+
+  applyTrackTransform({ animate: true });
+  syncActiveFromVisual();
 }
 
 function step(delta) {
@@ -409,12 +429,13 @@ function bindEvents() {
     }
   });
 
-  // Wheel over the reel area (wider than the thin cards)
-  const wheelTarget = els.wrap || els.carousel;
+  // Whole-page wheel: body is overflow:hidden, so native scroll never moves the reel.
+  // Listen on window so left/right panels still drive the carousel.
   let wheelLock = false;
-  wheelTarget.addEventListener(
+  window.addEventListener(
     "wheel",
     (event) => {
+      if (event.target.closest?.("#contact, a, input, textarea, select")) return;
       event.preventDefault();
       if (wheelLock || state.animating) return;
       const delta = event.deltaY === 0 ? event.deltaX : event.deltaY;
