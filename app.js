@@ -52,13 +52,15 @@ function statCard(label, value, icon, { live = false } = {}) {
     ? `<span class="live-badge" aria-label="Live"><span class="live-dot" aria-hidden="true"></span> LIVE</span>`
     : "";
   return `
-    <div class="stat">
-      <div class="stat-head">
-        ${liveBadge}
-        <span class="stat-label">${label}</span>
-        <span class="stat-icon" aria-hidden="true">${ICONS[icon]}</span>
+    <div class="stats-card">
+      <div class="stat">
+        <div class="stat-head">
+          ${liveBadge}
+          <span class="stat-label">${label}</span>
+          <span class="stat-icon" aria-hidden="true">${ICONS[icon]}</span>
+        </div>
+        <span class="stat-value">${formatNumber(value)}</span>
       </div>
-      <span class="stat-value">${formatNumber(value)}</span>
     </div>
   `;
 }
@@ -258,11 +260,9 @@ function renderDetail(page) {
   if (page.type === "profile") {
     const t = totals();
     els.detail.innerHTML = `
-      <div class="stats-card">
-        <div class="stat-grid">
-          ${statCard("Total CCU", t.playing, "ccu")}
-          ${statCard("Total visits", t.visits, "visits")}
-        </div>
+      <div class="stats-stack">
+        ${statCard("Total CCU", t.playing, "ccu")}
+        ${statCard("Total visits", t.visits, "visits")}
         <p class="panel-body">Across all listed experiences. Stats refresh automatically.</p>
       </div>
     `;
@@ -274,11 +274,9 @@ function renderDetail(page) {
     const s = gameStats(game.id);
     const playUrl = game.playUrl || (game.placeId ? `https://www.roblox.com/games/${game.placeId}` : null);
     els.detail.innerHTML = `
-      <div class="stats-card">
-        <div class="stat-grid">
-          ${statCard("Current CCU", s.playing, "ccu", { live: true })}
-          ${statCard("Visits", s.visits, "visits")}
-        </div>
+      <div class="stats-stack">
+        ${statCard("Current CCU", s.playing, "ccu", { live: true })}
+        ${statCard("Visits", s.visits, "visits")}
         ${
           playUrl
             ? `<a class="play-btn" href="${playUrl}" target="_blank" rel="noopener noreferrer">Play Here <span class="play-btn-icon" aria-hidden="true">↗</span></a>`
