@@ -268,7 +268,7 @@ body.is-ready {
   font-size: clamp(1.4rem, 2vw, 2rem);
   font-weight: 700;
   letter-spacing: -0.03em;
-  line-height: 1.05;
+  line-height: 1.2;
 }
 
 .panel-body {
@@ -292,6 +292,7 @@ body.is-ready {
   color: var(--ink);
   font-size: 0.82rem;
   font-weight: 500;
+  line-height: 1.35;
 }
 
 .tag-list li::after {
