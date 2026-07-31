@@ -47,10 +47,14 @@ const ICONS = {
   visits: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>`,
 };
 
-function statCard(label, value, icon) {
+function statCard(label, value, icon, { live = false } = {}) {
+  const liveBadge = live
+    ? `<span class="live-badge" aria-label="Live"><span class="live-dot" aria-hidden="true"></span> LIVE</span>`
+    : "";
   return `
     <div class="stat">
       <div class="stat-head">
+        ${liveBadge}
         <span class="stat-label">${label}</span>
         <span class="stat-icon" aria-hidden="true">${ICONS[icon]}</span>
       </div>
@@ -254,11 +258,13 @@ function renderDetail(page) {
   if (page.type === "profile") {
     const t = totals();
     els.detail.innerHTML = `
-      <div class="stat-grid">
-        ${statCard("Total CCU", t.playing, "ccu")}
-        ${statCard("Total visits", t.visits, "visits")}
+      <div class="stats-card">
+        <div class="stat-grid">
+          ${statCard("Total CCU", t.playing, "ccu")}
+          ${statCard("Total visits", t.visits, "visits")}
+        </div>
+        <p class="panel-body">Across all listed experiences. Stats refresh automatically.</p>
       </div>
-      <p class="panel-body">Across all listed experiences. Stats refresh automatically.</p>
     `;
     return;
   }
@@ -268,15 +274,17 @@ function renderDetail(page) {
     const s = gameStats(game.id);
     const playUrl = game.playUrl || (game.placeId ? `https://www.roblox.com/games/${game.placeId}` : null);
     els.detail.innerHTML = `
-      <div class="stat-grid">
-        ${statCard("Current CCU", s.playing, "ccu")}
-        ${statCard("Visits", s.visits, "visits")}
+      <div class="stats-card">
+        <div class="stat-grid">
+          ${statCard("Current CCU", s.playing, "ccu", { live: true })}
+          ${statCard("Visits", s.visits, "visits")}
+        </div>
+        ${
+          playUrl
+            ? `<a class="play-btn" href="${playUrl}" target="_blank" rel="noopener noreferrer">Play Here <span class="play-btn-icon" aria-hidden="true">↗</span></a>`
+            : `<span class="play-btn is-disabled" aria-disabled="true">Play link coming soon</span>`
+        }
       </div>
-      ${
-        playUrl
-          ? `<a class="play-btn" href="${playUrl}" target="_blank" rel="noopener noreferrer">Play Here</a>`
-          : `<span class="play-btn is-disabled" aria-disabled="true">Play link coming soon</span>`
-      }
     `;
     return;
   }
