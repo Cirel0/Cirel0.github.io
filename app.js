@@ -424,7 +424,16 @@ function setupContact(profile) {
 }
 
 function bindEvents() {
+  let suppressClick = false;
+
   document.body.addEventListener("click", (event) => {
+    if (suppressClick) {
+      event.preventDefault();
+      event.stopPropagation();
+      suppressClick = false;
+      return;
+    }
+
     const go = event.target.closest("[data-go]");
     if (go) {
       event.preventDefault();
@@ -482,6 +491,71 @@ function bindEvents() {
     passive: false,
     capture: true,
   });
+
+  // Vertical swipe on the carousel (phones / touch). Scoped to #carousel so
+  // the stacked mobile page can still scroll outside the reel.
+  let pointerId = null;
+  let startX = 0;
+  let startY = 0;
+  let swiped = false;
+  let swipeLock = false;
+  const SWIPE_THRESHOLD = 40;
+
+  const endPointer = (event) => {
+    if (pointerId === null || event.pointerId !== pointerId) return;
+    if (swiped) {
+      suppressClick = true;
+      // Clear if no click arrives (e.g. cancelled gesture)
+      window.setTimeout(() => {
+        suppressClick = false;
+      }, 400);
+    }
+    if (els.carousel.hasPointerCapture?.(pointerId)) {
+      els.carousel.releasePointerCapture(pointerId);
+    }
+    pointerId = null;
+    swiped = false;
+  };
+
+  els.carousel.addEventListener("pointerdown", (event) => {
+    if (!event.isPrimary || event.button !== 0) return;
+    pointerId = event.pointerId;
+    startX = event.clientX;
+    startY = event.clientY;
+    swiped = false;
+  });
+
+  els.carousel.addEventListener(
+    "pointermove",
+    (event) => {
+      if (pointerId === null || event.pointerId !== pointerId || swiped) return;
+
+      const dx = event.clientX - startX;
+      const dy = event.clientY - startY;
+      if (Math.abs(dy) < SWIPE_THRESHOLD) return;
+      // Prefer vertical; ignore mostly-horizontal pans
+      if (Math.abs(dy) < Math.abs(dx)) return;
+
+      event.preventDefault();
+      swiped = true;
+      try {
+        els.carousel.setPointerCapture(pointerId);
+      } catch {
+        // Ignore if capture fails mid-gesture
+      }
+      if (swipeLock) return;
+
+      swipeLock = true;
+      step(dy > 0 ? -1 : 1);
+      window.setTimeout(() => {
+        swipeLock = false;
+      }, 280);
+    },
+    { passive: false }
+  );
+
+  els.carousel.addEventListener("pointerup", endPointer);
+  els.carousel.addEventListener("pointercancel", endPointer);
 
   window.addEventListener("keydown", (event) => {
     if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
