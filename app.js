@@ -168,7 +168,7 @@ function renderCarousel() {
   for (let loop = 0; loop < LOOP_COPIES; loop += 1) {
     for (const [index, page] of state.reel.entries()) {
       slides.push(`
-      <article class="slide" data-id="${page.id}" data-index="${index}" data-loop="${loop}">
+      <article class="slide" data-id="${page.id}" data-go="${page.id}" data-index="${index}" data-loop="${loop}">
         <div class="slide-card">
           <img src="${page.image}" alt="${page.label}" draggable="false" />
         </div>

@@ -367,6 +367,7 @@ body.is-ready {
   transform: scale(0.72);
   opacity: 0.38;
   filter: grayscale(1);
+  cursor: pointer;
   transition:
     transform 0.55s var(--ease),
     opacity 0.55s var(--ease),
