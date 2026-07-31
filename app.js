@@ -29,9 +29,8 @@ const els = {
   leftTags: document.getElementById("left-tags"),
   clock: document.getElementById("clock"),
   year: document.getElementById("year"),
-  contactLink: document.getElementById("contact-link"),
-  contactDock: document.getElementById("contact"),
-  contactText: document.getElementById("contact-text"),
+  linkRoblox: document.getElementById("link-roblox"),
+  linkDiscord: document.getElementById("link-discord"),
   wrap: document.querySelector(".carousel-wrap"),
 };
 
@@ -389,38 +388,18 @@ function updateClock() {
   els.clock.textContent = formatted;
 }
 
-function setupContact(profile) {
+function setupSocialLinks(profile) {
   const links = profile.links || {};
-  const parts = [];
 
-  if (links.email) {
-    parts.push(`<a href="mailto:${links.email}">${links.email}</a>`);
-  }
-  if (links.discord) {
-    parts.push(`Discord: ${links.discord}`);
-  }
-  if (links.devforum) {
-    parts.push(
-      `<a href="${links.devforum}" target="_blank" rel="noopener noreferrer">DevForum</a>`
-    );
-  }
-  if (links.roblox) {
-    parts.push(
-      `<a href="${links.roblox}" target="_blank" rel="noopener noreferrer">Roblox profile</a>`
-    );
+  if (links.roblox && els.linkRoblox) {
+    els.linkRoblox.href = links.roblox;
+    els.linkRoblox.hidden = false;
   }
 
-  if (!parts.length) {
-    els.contactText.textContent =
-      "Add contact links in data/profile.json when you’re ready.";
-  } else {
-    els.contactText.innerHTML = parts.join("<br />");
+  if (links.discord && els.linkDiscord) {
+    els.linkDiscord.href = links.discord;
+    els.linkDiscord.hidden = false;
   }
-
-  els.contactLink.addEventListener("click", (event) => {
-    event.preventDefault();
-    els.contactDock.hidden = !els.contactDock.hidden;
-  });
 }
 
 function bindEvents() {
@@ -598,7 +577,7 @@ async function init() {
 
   renderCarousel();
   renderLegend();
-  setupContact(profile);
+  setupSocialLinks(profile);
   bindEvents();
 
   const profileIndex = reelIndexFor("profile");

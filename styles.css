@@ -123,6 +123,32 @@ body.is-ready {
   min-width: 7.5rem;
 }
 
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.social-link svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.social-link:hover {
+  opacity: 0.55;
+}
+
 .stage {
   position: relative;
   display: grid;
@@ -547,24 +573,6 @@ body.is-ready {
   font-size: 0.8rem;
 }
 
-.contact-dock {
-  position: fixed;
-  right: 2rem;
-  bottom: 3.2rem;
-  z-index: 5;
-  max-width: 18rem;
-  padding: 0.9rem 1rem;
-  background: var(--panel);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(17, 17, 17, 0.08);
-  font-size: 0.88rem;
-  line-height: 1.45;
-}
-
-.contact-dock a {
-  color: var(--ink);
-}
-
 @media (max-width: 980px) {
   body {
     height: auto;
@@ -645,12 +653,6 @@ body.is-ready {
   .site-footer {
     padding: 0 1.1rem 1.25rem;
     flex-direction: column;
-  }
-
-  .contact-dock {
-    right: 1.1rem;
-    left: 1.1rem;
-    max-width: none;
   }
 }
 
