@@ -261,7 +261,7 @@ function renderDetail(page) {
     const t = totals();
     els.detail.innerHTML = `
       <div class="stats-stack">
-        ${statCard("Total CCU", t.playing, "ccu")}
+        ${statCard("Total CCU", t.playing, "ccu", { live: true })}
         ${statCard("Total visits", t.visits, "visits")}
         <p class="panel-body">Across all listed experiences. Stats refresh automatically.</p>
       </div>
