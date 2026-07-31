@@ -173,6 +173,10 @@ body.is-ready {
   grid-column: 1;
   max-width: 320px;
   justify-self: center;
+  align-self: stretch;
+  justify-content: center;
+  max-height: none;
+  overflow: visible;
   animation: rise 0.7s var(--ease) both;
 }
 
