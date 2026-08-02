@@ -298,25 +298,27 @@ function renderDetail(page) {
     ? `<img class="quote-avatar" src="${item.avatar}" alt="" width="64" height="64" />`
     : "";
   els.detail.innerHTML = `
-    <blockquote class="quote-block">
-      <p>“${item.quote}”</p>
-      <div class="quote-author">
-        ${avatar}
-        <div class="quote-meta">
-          <strong>${item.name}</strong><br />
-          ${item.role}${item.game ? ` · ${item.game}` : ""}
+    <div class="stats-card quote-card">
+      <blockquote class="quote-block">
+        <p>“${item.quote}”</p>
+        <div class="quote-author">
+          ${avatar}
+          <div class="quote-meta">
+            <strong>${item.name}</strong><br />
+            ${item.role}${item.game ? ` · ${item.game}` : ""}
+          </div>
         </div>
+      </blockquote>
+      <div class="quote-nav" role="tablist" aria-label="Testimonial pages">
+        ${list
+          .map(
+            (_, i) =>
+              `<button type="button" data-quote="${i}" class="${
+                i === state.testimonialIndex ? "is-active" : ""
+              }">0${i + 1}</button>`
+          )
+          .join("")}
       </div>
-    </blockquote>
-    <div class="quote-nav" role="tablist" aria-label="Testimonial pages">
-      ${list
-        .map(
-          (_, i) =>
-            `<button type="button" data-quote="${i}" class="${
-              i === state.testimonialIndex ? "is-active" : ""
-            }">0${i + 1}</button>`
-        )
-        .join("")}
     </div>
   `;
 }

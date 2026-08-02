@@ -643,6 +643,10 @@ body.is-ready {
   max-width: 28ch;
 }
 
+.quote-card .quote-nav {
+  margin-top: 0;
+}
+
 .quote-author {
   display: flex;
   align-items: center;
