@@ -1,20 +1,20 @@
 [
   {
-    "quote": "Reliable scripter who ships clean systems and communicates clearly. A pleasure to work with.",
-    "name": "Collaborator Name",
+    "quote": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "name": "Test User 1",
     "role": "Game Producer",
-    "game": "Project Alpha"
+    "game": "Test Project A"
   },
   {
-    "quote": "Took ownership of complex gameplay features and delivered on time without drama.",
-    "name": "Studio Lead",
+    "quote": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.",
+    "name": "Test User 2",
     "role": "Creative Director",
-    "game": "Project Beta"
+    "game": "Test Project B"
   },
   {
-    "quote": "Strong Luau fundamentals and a sharp eye for performance. Would hire again.",
-    "name": "Fellow Developer",
+    "quote": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "name": "Test User 3",
     "role": "Technical Artist",
-    "game": "Project Gamma"
+    "game": "Test Project C"
   }
 ]
