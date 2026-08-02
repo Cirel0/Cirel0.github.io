@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * Fetches Roblox CCU + visits for games listed in data/games.json
- * and writes data/stats.json. Games without a placeId keep prior stats.
+ * and writes data/stats.json. Also refreshes the profile avatar headshot.
+ * Games without a placeId keep prior stats.
  */
 const fs = require("fs");
 const path = require("path");
@@ -9,12 +10,15 @@ const path = require("path");
 const ROOT = path.join(__dirname, "..");
 const GAMES_PATH = path.join(ROOT, "data", "games.json");
 const STATS_PATH = path.join(ROOT, "data", "stats.json");
+const PROFILE_PATH = path.join(ROOT, "data", "profile.json");
+const AVATAR_PATH = path.join(ROOT, "assets", "profile.png");
+const UA = "Cirel0-github-io-stats-bot";
 
 async function fetchJSON(url) {
   const res = await fetch(url, {
     headers: {
       Accept: "application/json",
-      "User-Agent": "Cirel0-github-io-stats-bot",
+      "User-Agent": UA,
     },
   });
   if (!res.ok) {
@@ -47,7 +51,58 @@ function readJSON(file, fallback) {
   }
 }
 
-async function main() {
+function userIdFromRobloxUrl(url) {
+  if (!url) return null;
+  const match = String(url).match(/\/users\/(\d+)/);
+  return match ? match[1] : null;
+}
+
+async function updateAvatar() {
+  const profile = readJSON(PROFILE_PATH, {});
+  const userId = userIdFromRobloxUrl(profile.links?.roblox);
+  if (!userId) {
+    console.warn("No Roblox user id in profile.links.roblox; skipping avatar");
+    return;
+  }
+
+  const meta = await fetchJSON(
+    `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=420x420&format=Png`
+  );
+  const entry = meta.data?.[0];
+  if (!entry?.imageUrl || entry.state !== "Completed") {
+    throw new Error(
+      `Avatar thumbnail not ready (state=${entry?.state || "missing"})`
+    );
+  }
+
+  const res = await fetch(entry.imageUrl, {
+    headers: { "User-Agent": UA },
+  });
+  if (!res.ok) {
+    throw new Error(
+      `${res.status} ${res.statusText} for avatar image ${entry.imageUrl}`
+    );
+  }
+
+  const buffer = Buffer.from(await res.arrayBuffer());
+  let previous = null;
+  try {
+    previous = fs.readFileSync(AVATAR_PATH);
+  } catch {
+    // no prior avatar
+  }
+
+  if (previous && Buffer.compare(previous, buffer) === 0) {
+    console.log("Avatar unchanged; leaving profile.png as-is");
+    return;
+  }
+
+  fs.mkdirSync(path.dirname(AVATAR_PATH), { recursive: true });
+  fs.writeFileSync(AVATAR_PATH, buffer);
+  console.log(`Updated ${path.relative(ROOT, AVATAR_PATH)}`);
+}
+
+async function updateStats() {
   const games = readJSON(GAMES_PATH, []);
   const previous = readJSON(STATS_PATH, { games: {}, totals: {} });
   const nextGames = { ...(previous.games || {}) };
@@ -129,6 +184,15 @@ async function main() {
   console.log(
     `Updated stats.json — CCU ${totals.playing}, visits ${totals.visits}`
   );
+}
+
+async function main() {
+  await updateStats();
+  try {
+    await updateAvatar();
+  } catch (error) {
+    console.warn("Avatar update failed:", error.message);
+  }
 }
 
 main().catch((error) => {

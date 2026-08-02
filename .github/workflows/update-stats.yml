@@ -7,6 +7,7 @@ on:
   push:
     paths:
       - "data/games.json"
+      - "data/profile.json"
       - "scripts/update-stats.js"
       - ".github/workflows/update-stats.yml"
 
@@ -25,17 +26,17 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Fetch Roblox stats
+      - name: Fetch Roblox stats and avatar
         run: node scripts/update-stats.js
 
-      - name: Commit stats if changed
+      - name: Commit changes if any
         run: |
-          if git diff --quiet -- data/stats.json; then
-            echo "No stats changes"
-            exit 0
-          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/stats.json
-          git commit -m "chore: refresh Roblox CCU and visits"
+          git add data/stats.json assets/profile.png
+          if git diff --cached --quiet; then
+            echo "No stats or avatar changes"
+            exit 0
+          fi
+          git commit -m "chore: refresh Roblox stats and avatar"
           git push
