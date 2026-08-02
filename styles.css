@@ -287,6 +287,17 @@ body.is-ready {
   max-width: 28ch;
 }
 
+.panel-body a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+.panel-body a:hover {
+  opacity: 0.55;
+}
+
 .tag-list {
   list-style: none;
   margin: 1rem 0 0;

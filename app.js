@@ -231,7 +231,7 @@ function renderLeft(page) {
   if (page.type === "profile") {
     els.leftKicker.textContent = "About";
     els.leftTitle.textContent = state.profile.title || "Profile";
-    els.leftBody.textContent = state.profile.bio || "";
+    els.leftBody.innerHTML = state.profile.bio || "";
     els.leftTags.innerHTML = (state.profile.skills || [])
       .map((skill) => `<li>${skill}</li>`)
       .join("");

@@ -1,7 +1,7 @@
 {
   "name": "Cirel0",
   "title": "Roblox Full-Stack Developer",
-  "bio": "I'm a Roblox developer with 5+ years of experience in Roblox Studio, specializing in full-stack development. I've designed and implemented core game systems across frontend and backend, and I'm proficient with Rojo for scalable development workflows. I've also taught Roblox programming at Kodland, demonstrating both technical expertise and the ability to communicate complex concepts effectively.",
+  "bio": "I'm a Roblox developer with 5+ years of experience in Roblox Studio, specializing in full-stack development. I've designed and implemented core game systems across frontend and backend, and I'm proficient with Rojo for scalable development workflows. I've also taught Roblox programming at <a href=\"https://www.kodland.org\" target=\"_blank\" rel=\"noopener noreferrer\">Kodland</a>, demonstrating both technical expertise and the ability to communicate complex concepts effectively.",
   "skills": [
     "Luau",
     "Gameplay Systems",
