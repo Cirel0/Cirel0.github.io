@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-08-02T14:32:37.366Z",
+  "updatedAt": "2026-08-02T14:34:13.010Z",
   "totals": {
-    "playing": 9,
+    "playing": 10,
     "visits": 9387592
   },
   "games": {
@@ -13,7 +13,7 @@
       "universeId": 8808386032
     },
     "youtube-roblox-museum": {
-      "playing": 0,
+      "playing": 1,
       "visits": 1930499,
       "name": "YouTube's Roblox Museum",
       "placeId": 87445296052708,
