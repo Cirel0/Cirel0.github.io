@@ -294,12 +294,18 @@ function renderDetail(page) {
   }
 
   const item = list[state.testimonialIndex % list.length];
+  const avatar = item.avatar
+    ? `<img class="quote-avatar" src="${item.avatar}" alt="" width="64" height="64" />`
+    : "";
   els.detail.innerHTML = `
     <blockquote class="quote-block">
       <p>“${item.quote}”</p>
-      <div class="quote-meta">
-        <strong>${item.name}</strong><br />
-        ${item.role}${item.game ? ` · ${item.game}` : ""}
+      <div class="quote-author">
+        ${avatar}
+        <div class="quote-meta">
+          <strong>${item.name}</strong><br />
+          ${item.role}${item.game ? ` · ${item.game}` : ""}
+        </div>
       </div>
     </blockquote>
     <div class="quote-nav" role="tablist" aria-label="Testimonial pages">
