@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-12T21:18:15.261Z",
+  "updatedAt": "2026-08-12T22:17:49.169Z",
   "totals": {
-    "playing": 7,
-    "visits": 9397793
+    "playing": 8,
+    "visits": 9397822
   },
   "games": {
     "enter-brainrot": {
@@ -34,8 +34,8 @@
       "universeId": 8554977584
     },
     "kingdom-of-magic-tycoon": {
-      "playing": 7,
-      "visits": 5792191,
+      "playing": 8,
+      "visits": 5792218,
       "name": "Kingdom of Magic Tycoon [ALPHA]",
       "placeId": 18608175830,
       "universeId": 6305332511
@@ -49,7 +49,7 @@
     },
     "climb-67-slap-tower": {
       "playing": 0,
-      "visits": 1065774,
+      "visits": 1065776,
       "name": "Climb 67 Slap Tower",
       "placeId": 96639401941432,
       "universeId": 9224479873
