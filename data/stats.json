@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-20T08:15:02.452Z",
+  "updatedAt": "2026-08-20T09:13:45.572Z",
   "totals": {
-    "playing": 2,
-    "visits": 9403861
+    "playing": 1,
+    "visits": 9403883
   },
   "games": {
     "enter-brainrot": {
@@ -34,8 +34,8 @@
       "universeId": 8554977584
     },
     "kingdom-of-magic-tycoon": {
-      "playing": 2,
-      "visits": 5797323,
+      "playing": 1,
+      "visits": 5797345,
       "name": "Kingdom of Magic Tycoon [ALPHA]",
       "placeId": 18608175830,
       "universeId": 6305332511
