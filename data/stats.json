@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-30T04:16:31.969Z",
+  "updatedAt": "2026-08-30T05:13:39.362Z",
   "totals": {
-    "playing": 9,
-    "visits": 9410813
+    "playing": 4,
+    "visits": 9410847
   },
   "games": {
     "enter-brainrot": {
@@ -14,14 +14,14 @@
     },
     "youtube-roblox-museum": {
       "playing": 0,
-      "visits": 1933487,
+      "visits": 1933490,
       "name": "YouTube's Roblox Museum",
       "placeId": 87445296052708,
       "universeId": 7899514634
     },
     "pirate-bridge-battles": {
       "playing": 0,
-      "visits": 95285,
+      "visits": 95289,
       "name": "Pirate Bridge Battles!",
       "placeId": 92586670057709,
       "universeId": 8575258327
@@ -34,8 +34,8 @@
       "universeId": 8554977584
     },
     "kingdom-of-magic-tycoon": {
-      "playing": 9,
-      "visits": 5803230,
+      "playing": 4,
+      "visits": 5803256,
       "name": "Kingdom of Magic Tycoon [ALPHA]",
       "placeId": 18608175830,
       "universeId": 6305332511
@@ -49,7 +49,7 @@
     },
     "climb-67-slap-tower": {
       "playing": 0,
-      "visits": 1065971,
+      "visits": 1065972,
       "name": "Climb 67 Slap Tower",
       "placeId": 96639401941432,
       "universeId": 9224479873
