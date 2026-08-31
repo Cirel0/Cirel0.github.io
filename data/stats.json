@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-31T19:11:25.082Z",
+  "updatedAt": "2026-08-31T20:14:44.106Z",
   "totals": {
-    "playing": 9,
-    "visits": 9412182
+    "playing": 4,
+    "visits": 9412216
   },
   "games": {
     "enter-brainrot": {
@@ -14,14 +14,14 @@
     },
     "youtube-roblox-museum": {
       "playing": 0,
-      "visits": 1933655,
+      "visits": 1933658,
       "name": "YouTube's Roblox Museum",
       "placeId": 87445296052708,
       "universeId": 7899514634
     },
     "pirate-bridge-battles": {
       "playing": 0,
-      "visits": 95290,
+      "visits": 95291,
       "name": "Pirate Bridge Battles!",
       "placeId": 92586670057709,
       "universeId": 8575258327
@@ -34,8 +34,8 @@
       "universeId": 8554977584
     },
     "kingdom-of-magic-tycoon": {
-      "playing": 9,
-      "visits": 5804405,
+      "playing": 4,
+      "visits": 5804435,
       "name": "Kingdom of Magic Tycoon [ALPHA]",
       "placeId": 18608175830,
       "universeId": 6305332511
