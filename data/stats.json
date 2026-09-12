@@ -1,27 +1,27 @@
 {
-  "updatedAt": "2026-08-02T14:34:13.010Z",
+  "updatedAt": "2026-09-12T06:06:55.910Z",
   "totals": {
-    "playing": 10,
-    "visits": 9387592
+    "playing": 9,
+    "visits": 9428117
   },
   "games": {
     "enter-brainrot": {
       "playing": 0,
-      "visits": 122050,
+      "visits": 122082,
       "name": "Enter Brainrot",
       "placeId": 129954432457499,
       "universeId": 8808386032
     },
     "youtube-roblox-museum": {
       "playing": 1,
-      "visits": 1930499,
+      "visits": 1934743,
       "name": "YouTube's Roblox Museum",
       "placeId": 87445296052708,
       "universeId": 7899514634
     },
     "pirate-bridge-battles": {
       "playing": 0,
-      "visits": 95279,
+      "visits": 95291,
       "name": "Pirate Bridge Battles!",
       "placeId": 92586670057709,
       "universeId": 8575258327
@@ -34,22 +34,22 @@
       "universeId": 8554977584
     },
     "kingdom-of-magic-tycoon": {
-      "playing": 9,
-      "visits": 5783645,
+      "playing": 8,
+      "visits": 5810576,
       "name": "Kingdom of Magic Tycoon [ALPHA]",
       "placeId": 18608175830,
       "universeId": 6305332511
     },
     "conveyor-fall-tower": {
       "playing": 0,
-      "visits": 124059,
+      "visits": 124102,
       "name": "Conveyor Fall Tower",
       "placeId": 126203415838533,
       "universeId": 9733834837
     },
     "climb-67-slap-tower": {
       "playing": 0,
-      "visits": 1065370,
+      "visits": 1066031,
       "name": "Climb 67 Slap Tower",
       "placeId": 96639401941432,
       "universeId": 9224479873
@@ -60,6 +60,13 @@
       "name": "REALM WARS! ✨",
       "placeId": 17066091319,
       "universeId": 5850146745
+    },
+    "zombie-harvest": {
+      "playing": 0,
+      "visits": 8602,
+      "name": "Zombie Harvest",
+      "placeId": 124451374628516,
+      "universeId": 10427320234
     }
   }
 }

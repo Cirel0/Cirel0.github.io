@@ -2,7 +2,7 @@ name: Update Roblox stats
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "37 * * * *"
   workflow_dispatch:
   push:
     paths:
