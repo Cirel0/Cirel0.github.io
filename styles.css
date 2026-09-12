@@ -215,17 +215,18 @@ body.is-ready {
   justify-self: center;
   align-self: stretch;
   justify-content: center;
+  justify-content: safe center;
   width: min(100%, 340px);
   gap: 2.25rem;
   align-items: flex-end;
   text-align: right;
-  max-height: none;
-  overflow: visible;
   animation: rise 0.7s var(--ease) 0.08s both;
 }
 
 .panel-right .detail {
   width: 100%;
+  flex-shrink: 0;
+  min-height: auto;
 }
 
 .panel-right .stat-head {
@@ -245,6 +246,7 @@ body.is-ready {
   align-items: flex-end;
   width: 100%;
   margin-top: 0.35rem;
+  flex-shrink: 0;
 }
 
 .panel-right .panel-body {

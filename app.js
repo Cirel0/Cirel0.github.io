@@ -252,7 +252,7 @@ function renderLeft(page) {
   els.leftKicker.textContent = "Social proof";
   els.leftTitle.textContent = "Testimonials";
   els.leftBody.textContent =
-    "Notes from people I’ve built with. Add your own in data/testimonials.json.";
+    "Notes from people I’ve built with.";
   els.leftTags.innerHTML = "";
 }
 

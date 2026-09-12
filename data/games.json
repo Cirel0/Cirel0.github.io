@@ -1,5 +1,15 @@
 [
   {
+    "id": "zombie-harvest",
+    "name": "Zombie Harvest",
+    "placeId": 124451374628516,
+    "role": "Backend Developer",
+    "tags": ["Backend"],
+    "blurb": "Worked on backend systems for the experience.",
+    "image": "assets/games/zombie-harvest.png",
+    "playUrl": "https://www.roblox.com/games/124451374628516"
+  },
+  {
     "id": "enter-brainrot",
     "name": "Enter Brainrot",
     "placeId": 129954432457499,
