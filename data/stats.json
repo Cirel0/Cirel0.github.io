@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-17T09:45:01.956Z",
+  "updatedAt": "2026-09-17T10:44:33.207Z",
   "totals": {
     "playing": 5,
-    "visits": 9433177
+    "visits": 9433212
   },
   "games": {
     "enter-brainrot": {
@@ -14,7 +14,7 @@
     },
     "youtube-roblox-museum": {
       "playing": 0,
-      "visits": 1935313,
+      "visits": 1935317,
       "name": "YouTube's Roblox Museum",
       "placeId": 87445296052708,
       "universeId": 7899514634
@@ -35,7 +35,7 @@
     },
     "kingdom-of-magic-tycoon": {
       "playing": 5,
-      "visits": 5815006,
+      "visits": 5815037,
       "name": "Kingdom of Magic Tycoon [ALPHA]",
       "placeId": 18608175830,
       "universeId": 6305332511
