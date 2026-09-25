@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-25T12:52:33.155Z",
+  "updatedAt": "2026-09-25T13:44:07.919Z",
   "totals": {
-    "playing": 12,
-    "visits": 9440632
+    "playing": 2,
+    "visits": 9440670
   },
   "games": {
     "enter-brainrot": {
@@ -34,8 +34,8 @@
       "universeId": 8554977584
     },
     "kingdom-of-magic-tycoon": {
-      "playing": 12,
-      "visits": 5821731,
+      "playing": 2,
+      "visits": 5821767,
       "name": "Kingdom of Magic Tycoon [ALPHA]",
       "placeId": 18608175830,
       "universeId": 6305332511
@@ -63,7 +63,7 @@
     },
     "zombie-harvest": {
       "playing": 0,
-      "visits": 8640,
+      "visits": 8642,
       "name": "Zombie Harvest",
       "placeId": 124451374628516,
       "universeId": 10427320234
