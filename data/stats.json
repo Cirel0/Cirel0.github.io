@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-28T17:44:42.335Z",
+  "updatedAt": "2026-09-28T18:50:13.374Z",
   "totals": {
-    "playing": 8,
-    "visits": 9443236
+    "playing": 3,
+    "visits": 9443259
   },
   "games": {
     "enter-brainrot": {
@@ -34,15 +34,15 @@
       "universeId": 8554977584
     },
     "kingdom-of-magic-tycoon": {
-      "playing": 8,
-      "visits": 5824053,
+      "playing": 3,
+      "visits": 5824075,
       "name": "Kingdom of Magic Tycoon [ALPHA]",
       "placeId": 18608175830,
       "universeId": 6305332511
     },
     "conveyor-fall-tower": {
       "playing": 0,
-      "visits": 124116,
+      "visits": 124117,
       "name": "Conveyor Fall Tower",
       "placeId": 126203415838533,
       "universeId": 9733834837
