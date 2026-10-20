@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-19T22:36:46.729Z",
+  "updatedAt": "2026-10-20T01:16:15.230Z",
   "totals": {
-    "playing": 7,
-    "visits": 9464682
+    "playing": 1,
+    "visits": 9464744
   },
   "games": {
     "enter-brainrot": {
@@ -13,8 +13,8 @@
       "universeId": 8808386032
     },
     "youtube-roblox-museum": {
-      "playing": 1,
-      "visits": 1937809,
+      "playing": 0,
+      "visits": 1937813,
       "name": "YouTube's Roblox Museum",
       "placeId": 87445296052708,
       "universeId": 7899514634
@@ -28,14 +28,14 @@
     },
     "grow-a-slime": {
       "playing": 0,
-      "visits": 30996,
+      "visits": 30997,
       "name": "Grow a Slime",
       "placeId": 83866907126369,
       "universeId": 8554977584
     },
     "kingdom-of-magic-tycoon": {
-      "playing": 6,
-      "visits": 5837236,
+      "playing": 1,
+      "visits": 5837291,
       "name": "Kingdom of Magic Tycoon [ALPHA]",
       "placeId": 18608175830,
       "universeId": 6305332511
@@ -49,7 +49,7 @@
     },
     "climb-67-slap-tower": {
       "playing": 0,
-      "visits": 1072718,
+      "visits": 1072720,
       "name": "Climb 67 Slap Tower",
       "placeId": 96639401941432,
       "universeId": 9224479873
