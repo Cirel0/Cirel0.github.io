@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-11-16T11:59:27.274Z",
+  "updatedAt": "2026-11-16T22:28:37.323Z",
   "totals": {
-    "playing": 0,
-    "visits": 9478350
+    "playing": 3,
+    "visits": 9478502
   },
   "games": {
     "enter-brainrot": {
@@ -13,8 +13,8 @@
       "universeId": 8808386032
     },
     "youtube-roblox-museum": {
-      "playing": 0,
-      "visits": 1939569,
+      "playing": 1,
+      "visits": 1939601,
       "name": "YouTube's Roblox Museum",
       "placeId": 87445296052708,
       "universeId": 7899514634
@@ -34,8 +34,8 @@
       "universeId": 8554977584
     },
     "kingdom-of-magic-tycoon": {
-      "playing": 0,
-      "visits": 5848542,
+      "playing": 2,
+      "visits": 5848661,
       "name": "Kingdom of Magic Tycoon [ALPHA]",
       "placeId": 18608175830,
       "universeId": 6305332511
@@ -63,7 +63,7 @@
     },
     "zombie-harvest": {
       "playing": 0,
-      "visits": 8668,
+      "visits": 8669,
       "name": "Zombie Harvest",
       "placeId": 124451374628516,
       "universeId": 10427320234
