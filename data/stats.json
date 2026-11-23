@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-11-22T22:45:36.608Z",
+  "updatedAt": "2026-11-23T03:58:44.092Z",
   "totals": {
     "playing": 1,
-    "visits": 9480734
+    "visits": 9480804
   },
   "games": {
     "enter-brainrot": {
@@ -14,7 +14,7 @@
     },
     "youtube-roblox-museum": {
       "playing": 0,
-      "visits": 1939933,
+      "visits": 1939941,
       "name": "YouTube's Roblox Museum",
       "placeId": 87445296052708,
       "universeId": 7899514634
@@ -35,7 +35,7 @@
     },
     "kingdom-of-magic-tycoon": {
       "playing": 1,
-      "visits": 5850535,
+      "visits": 5850595,
       "name": "Kingdom of Magic Tycoon [ALPHA]",
       "placeId": 18608175830,
       "universeId": 6305332511
@@ -49,7 +49,7 @@
     },
     "climb-67-slap-tower": {
       "playing": 0,
-      "visits": 1073291,
+      "visits": 1073293,
       "name": "Climb 67 Slap Tower",
       "placeId": 96639401941432,
       "universeId": 9224479873
