@@ -1,20 +1,20 @@
 {
-  "updatedAt": "2026-11-23T03:58:44.092Z",
+  "updatedAt": "2026-11-23T15:17:40.715Z",
   "totals": {
     "playing": 1,
-    "visits": 9480804
+    "visits": 9480938
   },
   "games": {
     "enter-brainrot": {
       "playing": 0,
-      "visits": 122130,
+      "visits": 122132,
       "name": "Enter Brainrot",
       "placeId": 129954432457499,
       "universeId": 8808386032
     },
     "youtube-roblox-museum": {
       "playing": 0,
-      "visits": 1939941,
+      "visits": 1939955,
       "name": "YouTube's Roblox Museum",
       "placeId": 87445296052708,
       "universeId": 7899514634
@@ -35,14 +35,14 @@
     },
     "kingdom-of-magic-tycoon": {
       "playing": 1,
-      "visits": 5850595,
+      "visits": 5850712,
       "name": "Kingdom of Magic Tycoon [ALPHA]",
       "placeId": 18608175830,
       "universeId": 6305332511
     },
     "conveyor-fall-tower": {
       "playing": 0,
-      "visits": 124184,
+      "visits": 124185,
       "name": "Conveyor Fall Tower",
       "placeId": 126203415838533,
       "universeId": 9733834837
